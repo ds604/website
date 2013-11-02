@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<style>
+		* { margin:0; padding:0; } /* to remove the top and left whitespace */
+		html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
+		canvas { display:block; } /* To remove the scrollbars */
+
+		/* to show the canvas bounds */
+		canvas {
+			background: #eee;
+		}
+
+		div {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			width: 200px;
+		}
+	</style>
+  </head>
+  <body>
+	<div>The canvas is the gray background color you see here. It will resize when you resize the browser, making it always fullscreen.</div>
+
+	<canvas id="canvas"></canvas>
+	<script>
+		(function() {
+				var canvas = document.getElementById('canvas'),
+					context = canvas.getContext('2d');
+
+				// resize the canvas to fill browser window dynamically
+				window.addEventListener('resize', resizeCanvas, false);
+				
+				function resizeCanvas() {
+						canvas.width = window.innerWidth;
+						canvas.height = window.innerHeight;
+						
+						/**
+						 * Your drawings need to be inside this function otherwise they will be reset when 
+						 * you resize the browser window and the canvas goes will be cleared.
+						 */
+						drawStuff(); 
+				}
+				resizeCanvas();
+				
+				function drawStuff() {
+					// do your drawing stuff here
+					var rectWidth = 150;
+					var rectHeight = 75;
+
+					// translate context to center of canvas
+					context.translate(canvas.width / 2, canvas.height / 2);
+
+					context.fillStyle = 'blue';
+					context.fillRect(rectWidth / -2, rectHeight / -2, rectWidth, rectHeight);
+				}
+		})();
+	</script>
+  </body>
+</html>

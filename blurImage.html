@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<style>
+        body { background:#eee; margin:1em }
+        canvas { display:block; background:#fff; border:1px solid #ccc }
+	</style>
+  </head>
+  <body>
+
+	<canvas id="canvas" width="600" height="400"></canvas>
+	<script>
+		var img = new Image,
+        ctx = document.querySelector('canvas').getContext('2d');
+        ctx.globalAlpha = 0.1;
+    
+        img.onload=function(){
+            for (var y=0;y<10;++y) ctx.drawImage(img,0,y);
+        }
+        img.src = 'http://phrogz.net/tmp/gkhead-small.png';
+	</script>
+  </body>
+</html>

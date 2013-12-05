@@ -17,12 +17,24 @@
 			left: 20px;
 			width: 200px;
 		}
+		footer { 
+			width: 175px; 
+			height: 1.5em; 
+			position: fixed; 
+			bottom: 0;
+			right: 0;
+			padding: 3px 5px 5px 5px;
+			text-align: left;
+			z-index: 200;
+		}
 	</style>
   </head>
   <body>
 	<div>The canvas is the gray background color you see here. It will resize when you resize the browser, making it always fullscreen.</div>
 
 	<canvas id="canvas"></canvas>
+	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+	  
 	<script>
 		var canvas = document.getElementById('canvas'),
 			context = canvas.getContext('2d');

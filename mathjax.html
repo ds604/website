@@ -8,27 +8,28 @@
 	<script type="text/javascript"
 	  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
+
+	
 	<style>
 		body {
 			color: #B1B1B1;
 			background-color: #000011;
-			font-family: Arial, sans-serif;
-			font-size: 9pt;
+			//font-family: Arial, sans-serif;
+			font-size: 10pt;
 		}
-		div{
-			//height:inherit;
+		div#main{
 			width:400PX;
 			text-align:left;
 			border:0px solid silver;
-			//display: table-cell;
 			vertical-align:middle;
 			margin: 0 auto;
-			//position: relative;
+			padding-top:12em;
+			padding-bottom:10em;
 		}
 		footer { 
 			width: 175px; 
-			height: 3em; 
-			position: absolute; 
+			height: 1.5em; 
+			position: fixed; 
 			bottom: 0;
 			right: 0;
 			padding: 3px 5px 5px 5px;
@@ -36,13 +37,49 @@
 			z-index: 200;
 		}
 	</style>
+
 	
 </head>
 <body>
-	<div>
+	<div id="main">
+		<div style="text-align:center;font-weight:bold;font-size:12pt;color:#FFFFFF;padding-bottom:1.4em">A Calculus For The Present</div>		
+		<div style="text-align:center;font-size:9pt;padding-bottom:4em">DAVID SARMA</div>
+		
 		When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
 		$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-		Faber-Castell is the largest maker of wood-encased pencils in the world and also makes a broad range of pens, crayons and art and drawing supplies as well as accessories like erasers and sharpeners. About half the company’s German production is exported, mostly to other countries in the euro zone. That means that Faber-Castell contributes, at least in a small way, to Germany’s large and controversial trade surplus — which now rivals China’s for the world’s largest.
+		
+		Similar to Laplace of Gaussian, the image is first smoothed by convolution with Gaussian kernel of certain width $\sigma_{1}$:
+
+\[
+G_{\sigma_{1}} (x,y) = \frac{1}{\sqrt{2\pi\sigma_{1}^2}} e^{-\frac{x^2 + y^2}{2\sigma_{1}^2}}
+\]
+
+to get
+
+\[g_{1}(x,y) = G_{\sigma_{1}}(x,y) \ast f(x,y)
+\] 
+
+With a different width $\sigma_2$, a second smoothed image can be obtained:
+
+\[
+g_{2}(x,y) = G_{\sigma_{2}}(x,y) \ast f(x,y)
+\] 
+
+We can show that the difference of these two Gaussian smoothed images, called difference of Gaussian (DoG), can be used to detect edges in the image. 
+
+\begin{align*}
+g_{1}(x,y) - g_{2}(x,y) &= G_{\sigma_{1}} \ast f(x,y) - G_{\sigma_{2}} \ast f(x,y) \\
+                        &= (G_{\sigma_{1}} - G_{\sigma_{2}}) \ast f(x,y) \\
+                        &= DoG \ast f(x,y)
+\end{align*}
+
+The DoG as an operator or convolution kernel is defined as:
+
+\[
+DoG = G_{\sigma_{1}} - G_{\sigma_{2}} = \frac{1}{\sqrt{2\pi}} \left( \frac{1}{\sigma_{1}} e^{-\frac{x^2 + y^2}{2\sigma_{1}^2}} - \frac{1}{\sigma_{2}} e^{-\frac{x^2 + y^2}{2\sigma_{2}^2}} \right)
+\]
+
+Faber-Castell is the largest maker of wood-encased pencils in the world and also makes a broad range of pens, crayons and art and drawing supplies as well as accessories like erasers and sharpeners. About half the company’s German production is exported, mostly to other countries in the euro zone. That means that Faber-Castell contributes, at least in a small way, to Germany’s large and controversial trade surplus — which now rivals China’s for the world’s largest.
 
 Faber-Castell illustrates how midsize companies — which account for about 60 percent of the country’s jobs — are able to stay competitive in the global marketplace. It has focused on design and engineering, developed a knack for turning everyday products into luxury goods, and stuck to a conviction that it still makes sense to keep some production in Germany.
 
@@ -63,7 +100,6 @@ But companies like Faber-Castell are more concerned about their ability to stay 
 There are threats everywhere, including ever-more-sophisticated Chinese competitors, the stagnant euro zone economy and unpredictable shifts in technology. And when even preschool children know how to operate iPads, there is no certainty of a future for colored pencils and ink markers.
 
 “The biggest challenge for Faber-Castell will be how writing will develop with the advent of digital technology,” said Hermann Simon, a management consultant who coined the term “hidden champions” to describe the highly focused, midsize companies like Faber-Castell that drive the German economy. “Will children still write? But Faber-Castell recognizes this challenge.”
-		
 		
 	</div>
 	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>

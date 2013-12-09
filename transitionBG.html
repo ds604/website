@@ -8,7 +8,7 @@
 
                 /* to show the canvas bounds */
                 canvas {
-                        background: #000011;
+                        /*background: #000011;*/
                 }
 
                 div {
@@ -30,14 +30,14 @@
         </style>
   </head>
   <body>
-        <!--http://html5hub.com/transition-background-color-with-javascript-json/-->
+
         <canvas id="canvas"></canvas>
         <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
         
 	  	<script>
-			var canvas = document.getElementById('canvas'),
-				ctx = canvas.getContext('2d');
-			
+	  		var canvas = document.getElementById('canvas'),
+			ctx = canvas.getContext('2d');
+
 			//global variables
 			var preLvlNm = 0;
 			var currLvlNm = 1;
@@ -54,6 +54,24 @@
 			
 			//array of three values that define the rgb of the new color
 			var currentArray;
+
+
+			var init = function(){
+			
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+
+				ctx.fillStyle = "rgb(" + game['colorStyle']['main'] + ");";
+				ctx.fillRect(0,0,canvas.width,canvas.height);
+
+				//init bg change
+				changeBG();
+
+				//init main game loop
+				gameLoop();
+			}
+			window.addEventListener("load", init, false);
+
 			
 			var game = {
 				//the amount of ms before the main game loop is called again
@@ -113,8 +131,7 @@
 				var c = currentArray;
 				if (p[0] != c[0] || p[1] != c[1] || p[2] != c[2]){
 					//do nothing
-				}
-				else {
+				} else {
 					transition = false;
 					if (continuousBG) {
 						changeBG();
@@ -139,6 +156,7 @@
 				//call gameloop again; based on runtime variable
 				setTimeout('gameLoop()', game.runTime);
 			}
+
 	  	</script>
   </body>
 </html>

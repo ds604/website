@@ -70,16 +70,14 @@ function canvasApp() {
 		lineColor = "#888888";
 		lineWidth = 1;
 		
-		for (var i=0; i<200; i++){
-			generate();
-		}
+		generateLines();
 		
 		theCanvas.addEventListener("click", clickListener, false);
 	}
 		
 	function clickListener(evt) {
 		context.clearRect(0,0,theCanvas.width,theCanvas.height);
-		generate();
+		generateLines();
 		
 		//code below prevents the mouse down from having an effect on the main browser window:
 		if (evt.preventDefault) {
@@ -176,7 +174,13 @@ function canvasApp() {
 		//context.lineWidth = 2;
 		//context.strokeRect(x0,y0,x1-x0,y1-y0);
 		
-	}	
+	}
+	
+	function generateLines() {
+		for (var i=0; i<200; i++){
+			generate();
+		}
+	}
 }
 
 

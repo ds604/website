@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+        <style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+        </style>
+
+<title>HTML5 Canvas</title>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.dev.js"></script>
+
+<script type="text/javascript">
+
+window.addEventListener("load", windowLoadHandler, false);
+
+//for debug messages
+var Debugger = function() { };
+Debugger.log = function(message) {
+        try {
+                console.log(message);
+        }
+        catch (exception) {
+                return;
+        }
+}
+
+function windowLoadHandler() {
+        canvasApp();
+}
+
+function canvasSupport() {
+        return Modernizr.canvas;
+}
+
+function canvasApp() {
+        if (!canvasSupport()) {
+                return;
+        }
+        
+        var theCanvas = document.getElementById("canvasOne");
+        var context = theCanvas.getContext("2d");
+        theCanvas.width = window.innerWidth;
+        theCanvas.height = window.innerHeight;
+        
+        var displayWidth = theCanvas.width;
+        var displayHeight = theCanvas.height;
+        
+        init();
+        
+ 	function init() {
+		lineColor = "#888888";
+		lineWidth = 1;
+		
+		generate();
+		
+		theCanvas.addEventListener("click", clickListener, false);
+	}
+		
+	function clickListener(evt) {
+		context.clearRect(0,0,theCanvas.width,theCanvas.height);
+		generate();
+		
+		//code below prevents the mouse down from having an effect on the main browser window:
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} //standard
+		else if (evt.returnValue) {
+			evt.returnValue = false;
+		} //older IE
+		return false;
+	}
+	
+	function setLinePoints(iterations) {
+		var pointList = {};
+		pointList.first = {x:0, y:1};
+		var lastPoint = {x:1, y:1}
+		var minY = 1;
+		var maxY = 1;
+		var point;
+		var nextPoint;
+		var dx, newX, newY;
+
+		pointList.first.next = lastPoint;
+		for (var i = 0; i < iterations; i++) {
+			point = pointList.first;
+			while (point.next != null) {
+				nextPoint = point.next;
+				
+				dx = nextPoint.x - point.x;
+				newX = 0.5*(point.x + nextPoint.x);
+				newY = 0.5*(point.y + nextPoint.y);
+				newY += dx*(Math.random()*2 - 1);
+				
+				var newPoint = {x:newX, y:newY};
+				
+				//min, max
+				if (newY < minY) {
+					minY = newY;
+				}
+				else if (newY > maxY) {
+					maxY = newY;
+				}
+				
+				//put between points
+				newPoint.next = nextPoint;
+				point.next = newPoint;
+				
+				point = nextPoint;
+			}
+		}
+		
+		//normalize to values between 0 and 1
+		if (maxY != minY) {
+			var normalizeRate = 1/(maxY - minY);
+			point = pointList.first;
+			while (point != null) {
+				point.y = normalizeRate*(point.y - minY);
+				point = point.next;
+			}
+		}
+		//unlikely that max = min, but could happen if using zero iterations. In this case, set all points equal to 1.
+		else {
+			point = pointList.first;
+			while (point != null) {
+				point.y = 1;
+				point = point.next;
+			}
+		}
+		
+		return pointList;		
+	}
+		
+	function generate() {
+		var point;
+		var y0 = displayHeight - 20;
+		var y1 = 20;
+		var x0 = 0;
+		var x1 = displayWidth;
+		
+		var pointList = setLinePoints(10);
+		
+		context.strokeStyle = lineColor;
+		context.lineWidth = lineWidth;
+		context.beginPath();
+		point = pointList.first;
+		context.moveTo(x0+(x1 - x0)*point.x, y0+(y1 - y0)*point.y);
+		while (point.next != null) {
+			point = point.next;
+			context.lineTo(x0+(x1 - x0)*point.x, y0+(y1 - y0)*point.y);
+		}
+		context.stroke();
+		
+		//frame
+		//context.strokeStyle = "rgba(100,150,255,0.5)";
+		//context.lineWidth = 2;
+		//context.strokeRect(x0,y0,x1-x0,y1-y0);
+		
+	}	
+}
+
+
+</script>
+
+<title>Fractal Line - HTML5 Canvas</title>
+
+</head>
+<body>
+<div id="container"> 
+    <canvas id="canvasOne">
+        Your browser does not support HTML5 canvas.
+    </canvas>
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+</div>
+</body>
+</html>

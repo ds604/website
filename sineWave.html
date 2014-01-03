@@ -23,10 +23,18 @@
                 }
         </style>
 
-        <script src="raphael.js" type="text/javascript" charset="utf-8"></script> 
 
 <script type="text/javascript" charset="utf-8"> 
 
+	var ms = 0;
+    var canw, canh;
+	canw = window.innerWidth;
+    canh = window.innerHeight;
+	
+	center_x = canw/2;
+	center_y = canh/2;
+	
+	
     function byid(id)
     {
         return document.getElementById(id);
@@ -37,11 +45,11 @@
     {
         // sine path from 0 to rads radians scales by sx
 
-        var N = 29;
+        var N = 39;
         var dx=2*(Math.PI)/N;
         var x=0;
-        var px = 150;
-        var py = 100;
+		var px = 150;
+		var py = 100;
 
         var p0 = "M"+ px +","+ py;
 
@@ -81,10 +89,6 @@
         ctx.closePath();
     }
 
-    var ms = 0;
-    var canw, canh;
-	canw = window.innerWidth;
-    canh = window.innerHeight;
 
     function millis()
     {
@@ -96,9 +100,12 @@
     {
         var canvas = byid('canv');
         var ctx = canvas.getContext("2d");
+		canvas.width = canw;
+		canvas.height = canh;
+		ctx.translate((center_x+200)/2,(center_y+100)/2);
 
         ms = millis();
-        setInterval(function () { draw(ctx); }, 1000);                 // drawing loop 1/20th second
+        setInterval(function () { draw(ctx); }, 100);                 // drawing loop 1/20th second
     };
 
     function circ_dot(ctx, t)
@@ -106,8 +113,8 @@
         var x = 100 + 50*Math.cos(t);
         var y = 100 - 50*Math.sin(t);
 
-        ctx.strokeStyle = "rgba(  0,255,255,0.5)";
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(  255,0,0,1)";
+        ctx.lineWidth = 1;
 
         path_line(ctx, 100,100, x,y);
         path_line(ctx, x,100, x,y);
@@ -121,8 +128,8 @@
         var x = 150 + t*180/Math.PI;
         var y = 100 - 50*Math.sin(t);
 
-        ctx.strokeStyle = "rgba(  0,255,255,0.5)";
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(  255,0,0,1)";
+        ctx.lineWidth = 1.0;
         path_line(ctx, x,100, x,y);
 		
 		
@@ -135,8 +142,8 @@
         var x = 150 + 0;//t;
         var y = 100 - 50*Math.sin(t);
 
-        ctx.strokeStyle = "rgba(  0,255,255,0.4)";
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(  255,0,0,1)";
+        ctx.lineWidth = 1.0;
         path_line(ctx, 150,100, x,y);
 		
 		ctx.fillStyle = "Red";
@@ -159,7 +166,7 @@
         var dT = now-ms;
 
         step++;
-        if (step>40)
+        if (step>(40-1))
             step=0;
 
         var r = (step/40) * 2.0*Math.PI;
@@ -171,16 +178,15 @@
         ctx.lineWidth = 2;
 
         path_sin(ctx);
-
-        path_circ(ctx, 100, 100, 50);
+		path_circ(ctx, 100, 100, 50);
 
         // axes
 
-        ctx.strokeStyle = "LightGreen";
+        ctx.strokeStyle = "#888888";
         ctx.lineWidth = 0.6;
 
-        path_line(ctx, 25,100,513,100);
-        path_line(ctx,100, 25,100,175);
+		path_line(ctx, 25,100,513,100);
+		path_line(ctx,100,25,100,175);
         path_line(ctx,150, 25,150,175);
 
         circ_dot(ctx, r);

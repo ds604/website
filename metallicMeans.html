@@ -1,0 +1,67 @@
+<!--http://en.wikipedia.org/wiki/Silver_ratio-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax TeX Test Page</title>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+
+        
+        <style>
+                body {
+                        color: #E9E7E7;
+                        background-color: #000011;
+                        //font-family: Arial, sans-serif;
+                        font-size: 10pt;
+                }
+                div#main{
+                                                width: 500px;
+                                                height: 400px;
+                                /*background-color: red;*/
+                                        
+                                                position: absolute;
+                                                top:0;
+                                                bottom: 0;
+                                                left: 0;
+                                                right: 0;
+                                        
+                                                margin: auto;
+                }
+                div.image{
+                        text-align:center;
+                        padding-top: 1em;
+                        padding-bottom: 1em;
+                }
+                div.image > img{
+                        width:400px;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+        </style>
+
+        
+</head>
+<body>
+        <div id="main">              
+                        <div style="font-size:40pt;">
+$$n+\frac{1}{n+\frac{1}{n+\frac{1}{n+\frac{1}{n+\frac{1}{n+\dots}}}}}$$
+			</div>
+                
+
+               
+        </div>
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+</body>
+</html>

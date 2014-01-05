@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                                                margin: 0;
+                                                overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+        </style>
+
+
+		<title> Draw Worm </title>
+		
+		<!-- Scripts -->
+		<script type="text/javascript" src="http://ds604.github.io/website/javascripts/draw-worm.js"></script>
+		<script type="text/javascript" src="http://ds604.github.io/website/javascripts/matrix.js"></script>
+		<script>
+			var app;
+			window.onload = function() {
+				app = new DrawWorm();
+				app.initialize();
+			}
+		</script>
+		
+	</head>
+	<body>
+		
+		<canvas id="canvas"></canvas>
+		<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+	</body>
+</html>

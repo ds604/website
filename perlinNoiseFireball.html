@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Perline noise | Fireball explosion</title>
+		<meta charset="utf-8">
+	</head>
+	
+	<style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                        //font-family: Arial, sans-serif;
+                        font-size: 10pt;
+                }
+                div#main{
+                        width:400PX;
+                        text-align:left;
+                        border:0px solid silver;
+                        vertical-align:middle;
+                        margin: 0 auto;
+                        padding-top:12em;
+                        padding-bottom:10em;
+                }
+                div.image{
+                        text-align:center;
+                        padding-top: 1em;
+                        padding-bottom: 1em;
+                }
+                div.image > img{
+                        width:400px;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+        </style>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script>
+	<script type="x-shader/x-vertex" id="vertexShader">
+		//Put the Vertex Shader code here
+	</script>
+	
+	<script type="x-shader/x-vertex" id="fragmentShader">
+		//Put the Fragment Shader code here
+	</script>
+	
+	<script type="text/javascript" id="mainCode">
+		//Put the main code here
+		var container,
+			renderer,
+			scene,
+			camera,
+			mesh,
+			start = Date.now(),
+			fov = 30;
+		
+		window.addEventListener('load', function(){
+			//grab the container from the DOM
+			container = document.getElementById("container");
+			
+			//create a scene
+			scene = new THREE.Scene();
+			
+			//create a camera the size of the browser window
+			//and place it 100 units away, looking towards the center of the scene
+			camera = new THREE.PerspectiveCamera(
+				fov,
+				window.innerWidth/window.innerHeight,
+				1,
+				10000
+			);
+			camera.position.z = 100;
+			camera.target = new THREE.Vector3(0,0,0);
+			scene.add(camera);
+			
+			//create a wireframe material
+			material = new THREE.MeshBasicMaterial({
+				color: "#888888",
+				wireframe: true
+			});
+			
+			//create a sphere and assign the material
+			mesh = new THREE.Mesh(
+				new THREE.IcosahedronGeometry(20,4),
+				material
+			);
+			scene.add(mesh);
+			
+			//create the renderer and attach it to the DOM
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			
+			container.appendChild(renderer.domElement);
+			
+			render();
+		});
+		
+		function render(){
+			//let there be light
+			renderer.render(scene, camera);
+			requestAnimationFrame(render);
+		}
+	</script>
+	<body>
+		<div id="container"></div>
+		<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+	</body>
+</html>

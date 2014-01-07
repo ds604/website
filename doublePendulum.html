@@ -1,0 +1,375 @@
+<!--http://www.sci.utah.edu/~msteffen/teaching/double_pendulum.html-->
+<html><head>
+
+  <meta http-equiv="Content-type" content="text/html; 
+charset=ISO-8859-1">
+  <title>Double Pendulum in HTML5</title>
+  <script type="text/javascript">
+    var numSegments = 100;
+    var alphaStep = Math.exp(Math.log(0.01) / numSegments);
+    var defaultTheta1 = [Math.PI - 0.001, Math.PI - 0.001];
+    var defaultTheta2 = [Math.PI + 0.001, Math.PI + 0.002];
+    
+    function modf(a, b)
+    {
+        // ugly hack
+        return (a + 1000 * b) % b;
+        /* if (a > 0) {
+            return a % b;
+        } else {
+            while (a < 0) {
+		a += b;
+            }
+            return a;
+        } */
+    }
+
+    function Ball(color, radius, x, y, dx)
+    {
+      this.canvas = canvas;
+      this.context = canvas.getContext('2d');
+      this.radius = radius;
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.dx = dx;
+    }
+
+    Ball.prototype.Draw = function ()
+    {
+      this.context.beginPath();
+      this.context.strokeStyle = '#333';
+      this.context.fillStyle = this.color;
+      this.context.arc(this.x*50 + this.dx, -this.y*50 + 150, this.radius, 0, 6.3, false);
+      /*this.context.arc(25, 50, 25, 0, 6.3, false);*/
+      /*alert("I am here!");*/
+      this.context.fill();
+      this.context.stroke();
+    }
+
+    function DrawBetween(i, j)
+    {
+      balls[i].context.strokeStyle = '#333';
+      balls[i].context.fillStyle = 'rgba(0,0,0,1)';
+      /* alert("I am here"); */
+      balls[i].context.moveTo(balls[i].x*50 + balls[i].dx, -balls[i].y*50 + 150);
+      balls[i].context.lineTo(balls[j].x*50 + balls[j].dx, -balls[j].y*50 + 150);
+      balls[i].context.stroke();
+    }
+    
+    
+    function f1(theta1, theta2, omega1, omega2, L1, L2, m1, m2){
+      val = 2 * Math.sin(theta1 - theta2) *
+        (omega1 * omega1 * L1 * (m1 + m2) + g * (m1 + m2) * Math.cos(theta1) +
+        omega2 * omega2 * L2 * m2 * Math.cos(theta1 - theta2));
+      val = val / (L2 * (2 * m1 + m2 - m2 * Math.cos(2 * (theta1 - theta2))));
+      
+      return val;
+    }
+    
+    
+    function f2(theta1, theta2, omega1, omega2, L1, L2, m1, m2){
+      val = -g * (2 * m1 + m2) * Math.sin(theta1) -
+        m2 * g * Math.sin(theta1 - 2 * theta2) -
+        2 * Math.sin(theta1 - theta2) * m2 *
+        (omega2 * omega2 * L2 + omega1 * omega1 * L1 * Math.cos(theta1 - theta2));
+      val = val / (L1 * (2 * m1 + m2 - m2 * Math.cos(2 * (theta1 - theta2))));
+      return val;
+    }
+    
+    function UpdateBallsFE (i)
+    {
+      domega2 = f1(theta1[i], theta2[i], omega1[i], omega2[i], L1[i], L2[i], m1[i], m2[i]);
+      domega1 = f2(theta1[i], theta2[i], omega1[i], omega2[i], L1[i], L2[i], m1[i], m2[i]);
+      dtheta2 = omega2[i];
+      dtheta1 = omega1[i];
+      
+
+      omega2[i] = omega2[i] + domega2 * dt;
+      omega1[i] = omega1[i] + domega1 * dt;
+      theta2[i] = modf(theta2[i] + dtheta2 * dt, Math.PI * 2);
+      theta1[i] = modf(theta1[i] + dtheta1 * dt, Math.PI * 2);
+
+      
+      balls[2*i].x = L1[i] * Math.sin(theta1[i]);
+      balls[2*i].y = -L1[i] * Math.cos(theta1[i]);
+      balls[2*i+1].x = balls[2*i].x + L2[i] * Math.sin(theta2[i]);
+      balls[2*i+1].y = balls[2*i].y - L2[i] * Math.cos(theta2[i]);
+
+    }
+    
+
+    function Point (x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    function UpdateTraces ()
+    {
+        if (trace_a.length == numSegments) {
+            trace_a = trace_a.slice(1);
+            trace_b = trace_b.slice(1);
+        }
+        trace_a.push(new Point(theta1[0], theta2[0]));
+        trace_b.push(new Point(theta1[1], theta2[1]));
+    }
+    function DrawTraces()
+    {
+
+      var s = 300 / (Math.PI * 2);
+      var c = 150 - Math.PI * s;
+
+      var draw_trace = function (trace_color, trace) {
+        context_conf.lineWidth = 2;
+
+        var alpha = 1.0;
+        var px = c+s * modf(trace[trace.length-1].x, Math.PI*2);
+        var py = c+s * modf(trace[trace.length-1].y, Math.PI*2);
+
+        for (var i=trace.length-2; i >= 0; --i) {
+          var npx = c+s * modf(trace[i].x, Math.PI*2);
+          var npy = c+s * modf(trace[i].y, Math.PI*2);
+          var dx = npx - px;
+          var dy = npy - py;
+      	  var d = dx * dx + dy * dy;
+          alpha *= alphaStep;
+	        if (d < 22500.0) {
+            context_conf.strokeStyle = trace_color + alpha + ')';
+            context_conf.beginPath();
+            context_conf.moveTo(px, py);
+            context_conf.lineTo(npx, npy);
+            context_conf.stroke();
+          }
+          px = npx;
+          py = npy;
+        }
+      }
+      draw_trace('rgba(0,0,255,', trace_a);
+      draw_trace('rgba(255,0,0,', trace_b);
+    }
+
+    
+    function UpdateBallsRK (i)
+    {
+      a1 = omega1[i];
+      a2 = omega2[i];
+
+      a3 = f2(theta1[i], theta2[i], omega1[i], omega2[i], L1[i], L2[i], m1[i], m2[i]);    
+      a4 = f1(theta1[i], theta2[i], omega1[i], omega2[i], L1[i], L2[i], m1[i], m2[i]);
+            
+      b1 = omega1[i] + .5 * dt * a3;
+      b2 = omega2[i] + .5 * dt * a4;
+      b3 = f2(theta1[i] + .5 * dt * a1, theta2[i] + .5 * dt * a2,
+              omega1[i] + .5 * dt * a3, omega2[i] + .5 * dt * a4,
+              L1[i], L2[i], m1[i], m2[i]);
+      b4 = f1(theta1[i] + .5 * dt * a1, theta2[i] + .5 * dt * a2,
+              omega1[i] + .5 * dt * a3, omega2[i] + .5 * dt * a4,
+              L1[i], L2[i], m1[i], m2[i]);
+              
+      c1 = omega1[i] + .5 * dt * b3;
+      c2 = omega2[i] + .5 * dt * b4;
+      c3 = f2(theta1[i] + .5 * dt * b1, theta2[i] + .5 * dt * b2,
+              omega1[i] + .5 * dt * b3, omega2[i] + .5 * dt * b4,
+              L1[i], L2[i], m1[i], m2[i]);
+      c4 = f1(theta1[i] + .5 * dt * b1, theta2[i] + .5 * dt * b2,
+              omega1[i] + .5 * dt * b3, omega2[i] + .5 * dt * b4,
+              L1[i], L2[i], m1[i], m2[i]);
+
+      d1 = omega1[i] + dt * c3;
+      d2 = omega2[i] + dt * c4;
+      d3 = f2(theta1[i] + dt * c1, theta2[i] + dt * c2,
+              omega1[i] + dt * c3, omega2[i] + dt * c4,
+              L1[i], L2[i], m1[i], m2[i]);
+      d4 = f1(theta1[i] + dt * c1, theta2[i] + dt * c2,
+              omega1[i] + dt * c3, omega2[i] + dt * c4,
+              L1[i], L2[i], m1[i], m2[i]);
+    
+      theta1[i] = modf(theta1[i] + 1./6. * dt * (a1 + 2 * b1 + 2 * c1 + d1), 2*Math.PI);
+      theta2[i] = modf(theta2[i] + 1./6. * dt * (a2 + 2 * b2 + 2 * c2 + d2), 2*Math.PI);
+      omega1[i] = omega1[i] + 1./6. * dt * (a3 + 2 * b3 + 2 * c3 + d3);
+      omega2[i] = omega2[i] + 1./6. * dt * (a4 + 2 * b4 + 2 * c4 + d4);
+            
+      balls[2*i].x = L1[i] * Math.sin(theta1[i]);
+      balls[2*i].y = -L1[i] * Math.cos(theta1[i]);
+      balls[2*i+1].x = balls[2*i].x + L2[i] * Math.sin(theta2[i]);
+      balls[2*i+1].y = balls[2*i].y - L2[i] * Math.cos(theta2[i]);
+
+    }
+
+    
+    function CreateBalls ()
+    {
+      balls = [];
+      theta1 = [Math.PI - 0.001, Math.PI - 0.001];
+      theta2 = [Math.PI + 0.001, Math.PI + 0.002];
+      L1 = [1, 1];
+      L2 = [1, 1];
+      m1 = [1, 1];
+      m2 = [1.2, 1.2];
+      omega1 = [0.0, 0.0];
+      omega2 = [0.0, 0.0];
+      g = 9.0;
+
+      dt = .001;
+      t = [];
+      t.push(0.0);
+      t.push(0.0);
+
+      x1 = L1[0] * Math.sin(theta1[0]);
+      y1 = -L1[0] * Math.cos(theta1[0]);
+      balls.push(new Ball('rgba(0,0,255,0.5)', 10.0 * Math.sqrt(m1[0]), x1, y1, 150));
+
+      x2 = x1 + L2[0] * Math.sin(theta2[0]);
+      y2 = y1 - L2[0] * Math.cos(theta2[0]);
+      balls.push(new Ball('rgba(0,0,255,0.5)', 10.0 * Math.sqrt(m2[0]), x2, y2, 150));
+      
+      x1 = L1[1] * Math.sin(theta1[1]);
+      y1 = -L1[1] * Math.cos(theta1[1]);
+
+      balls.push(new Ball('rgba(255,0,0,0.5)', 10.0 * Math.sqrt(m1[1]), x1, y1, 450));
+      
+      x2 = x1 + L2[1] * Math.sin(theta2[1]);
+      y2 = y1 - L2[1] * Math.cos(theta2[1]);
+      balls.push(new Ball('rgba(255,0,0,0.5)', 10.0 * Math.sqrt(m2[1]), x2, y2, 450));
+
+      balls.push(new Ball('rgba(0,0,0,1)', 3, 0, 0, 150));
+      balls.push(new Ball('rgba(0,0,0,1)', 3, 0, 0, 450));
+    }
+
+    function CreateTraces()
+    {
+      trace_a = [];
+      trace_b = [];
+    }
+    
+    function DrawScreen()
+    {
+      canvas = document.getElementById("pendcanvas");
+      context = canvas.getContext('2d');
+      canvas_conf = document.getElementById("confspace");
+      context_conf = canvas_conf.getContext('2d');
+      
+      /* alert("hello"); */
+
+
+      if(typeof(balls) == 'undefined'){
+        CreateBalls();
+        CreateTraces();
+        UpdateTraces();
+        reset();
+      }
+      
+      canvas.width = canvas.width;
+      canvas_conf.width = canvas_conf.width;
+      DrawBetween(0, 1);
+      DrawBetween(0, 4);
+      DrawBetween(2, 3);
+      DrawBetween(2, 5); 
+      for(i in balls){
+        balls[i].Draw();
+      }
+      
+      DrawTraces();
+    }
+    
+    function timerCallback()
+    {
+      
+      DrawScreen();
+      UpdateTraces();
+      for(i=0; i < 10; i = i + 1){
+        UpdateBallsRK(0);
+        UpdateBallsRK(1);
+      }
+      timer= setTimeout(timerCallback, 2);
+    }
+
+    window.onload = function ()
+    {
+      DrawScreen();
+      timer = setTimeout(timerCallback, 40);
+      clearTimeout(timer);
+      timer = null;
+    }
+    
+    function reset()
+    {
+/*    
+      theta1[0] = defaultTheta1[0];
+      theta1[1] = defaultTheta1[1];
+      theta2[0] = defaultTheta2[0];
+      theta2[1] = defaultTheta2[1];
+*/
+      omega1 = [0,0];
+      omega2 = [0,0];
+    
+      theta1[0] = parseFloat(document.getElementById('t1a').value) / 180 * Math.PI;
+      theta1[1] = parseFloat(document.getElementById('t1b').value) / 180 * Math.PI;
+      theta2[0] = parseFloat(document.getElementById('t2a').value) / 180 * Math.PI;
+      theta2[1] = parseFloat(document.getElementById('t2b').value) / 180 * Math.PI;
+      m1[0] = parseFloat(document.getElementById('m1a').value);
+      m1[1] = parseFloat(document.getElementById('m1b').value);
+      m2[0] = parseFloat(document.getElementById('m2a').value);
+      m2[1] = parseFloat(document.getElementById('m2b').value);
+      
+      balls[0].radius = 10.0 * Math.sqrt(m1[0]);
+      balls[1].radius = 10.0 * Math.sqrt(m2[0]);
+      balls[2].radius = 10.0 * Math.sqrt(m1[1]);
+      balls[3].radius = 10.0 * Math.sqrt(m2[1]);
+
+      balls[0].x = L1[0] * Math.sin(theta1[0]);
+      balls[0].y = -L1[0] * Math.cos(theta1[0]);
+      balls[1].x = balls[0].x + L2[0] * Math.sin(theta2[0]);
+      balls[1].y = balls[0].y - L2[0] * Math.cos(theta2[0]);
+      balls[2].x = L1[1] * Math.sin(theta1[1]);
+      balls[2].y = -L1[1] * Math.cos(theta1[1]);
+      balls[3].x = balls[2].x + L2[1] * Math.sin(theta2[1]);
+      balls[3].y = balls[2].y - L2[1] * Math.cos(theta2[1]);
+
+      CreateTraces();
+      UpdateTraces();
+      DrawScreen();
+    }
+  </script>
+</head><body>
+
+<canvas id="pendcanvas" width="600" height="300" style="border: 1px 
+dashed grey;">
+  Your browser does not support HTML5, required for this example.
+</canvas>
+<canvas id="confspace" width="300" height="300" style="border: 1px 
+dashed grey;">
+  content for all you fools out there.
+</canvas><br>
+<button onclick="if (!timer) timer = setTimeout(timerCallback, 40)">Go</button>
+<button onclick="clearTimeout(timer); timer = null">Stop</button>
+<button onclick="reset()">Reset</button><br>
+<table border="0" cellpadding="0" cellspacing="8">
+<tbody><tr>
+  <th></th>
+  <th>Left Pendulum</th>
+  <th>Right Pendulum</th>
+</tr>
+<tr>
+  <td>Theta1:</td>
+  <td><input id="t1a" value="179" type="text" width="20"></td>
+  <td><input id="t1b" value="179" type="text" width="20"></td>
+</tr>
+<tr>
+  <td>Theta2:</td>
+  <td><input id="t2a" value="181" type="text" width="20"></td>
+  <td><input id="t2b" value="181.01" type="text" width="20"></td>
+</tr>
+<tr>
+  <td>M1:</td>
+  <td><input id="m1a" value="1" type="text" width="20"></td>
+  <td><input id="m1b" value="1" type="text" width="20"></td>
+</tr>
+<tr>
+  <td>M2:</td>
+  <td><input id="m2a" value="1.2" type="text" width="20"></td>
+  <td><input id="m2b" value="1.2" type="text" width="20"></td>
+</tr>
+</tbody></table>
+</body></html>

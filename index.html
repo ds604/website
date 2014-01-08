@@ -44,63 +44,52 @@
                         text-align: left;
                         z-index: 200;
                 }
+			
+				a:link { color: #888888 ; text-decoration: none; }
+				a:visited { color: #888888 ; text-decoration: none; }
+				a:active { color: #888888 ; text-decoration: none; }
+				a:hover { color: red; text-decoration: none;  }
         </style>
 
         
 </head>
 <body>
         <div id="main">
-                <div style="text-align:center;font-weight:bold;font-size:12pt;color:#FFFFFF;padding-bottom:1.4em">$\int dS$</div>                
-                <div style="text-align:center;font-size:9pt;padding-bottom:4em">DAVID SARMA</div>
+                <div style="text-align:center;font-weight:bold;font-size:30pt;color:#FFFFFF;padding-bottom:1.4em">\[ \int dS \]</div>                
                 
+                <a href="http://ds604.github.io/website/integralDS.html">Integral dS</a><br>
+			<a href="http://ds604.github.io/website/badTVShader.html.html">Bad TV Shader</a><br>
+			<a href="http://ds604.github.io/website/blurImage.html.html">Blur Image</a><br>
+			<a href="http://ds604.github.io/website/businessPlan.html">Business Plan</a><br>
+			<a href="http://ds604.github.io/website/centeredImage.html">Centered Image</a><br>
+			<a href="http://ds604.github.io/website/centeredSquare.html">Centered Square</a><br>
+			<a href="http://ds604.github.io/website/centeredText.html">Centered Text</a><br>
+			<a href="http://ds604.github.io/website/christmasTree.html">Christmas Tree</a><br>
+			<a href="http://ds604.github.io/website/clock.html">Clock</a><br>
+			<a href="http://ds604.github.io/website/coloredDots.html">Colored Dots</a><br>
+			<a href="http://ds604.github.io/website/d3_circlePacking.html">Circle Packing</a><br>
+			<a href="http://ds604.github.io/website/doublePendulum.html">Double Pendulum</a><br>
+			<a href="http://ds604.github.io/website/example.html">Example</a><br>
+			<a href="http://ds604.github.io/website/flipFigures.html">Flip Figures</a><br>
+			
+			<a href="http://ds604.github.io/website/fractalLine.html">Fractal Line</a><br>
+			<a href="http://ds604.github.io/website/fractalLines.html">Fractal Lines</a><br>
+			<a href="http://ds604.github.io/website/grid.html">Grid</a><br>
+			<a href="http://ds604.github.io/website/integralDS.html">Integral DS</a><br>
+			<a href="http://ds604.github.io/website/learningWebgl_L1.html">Learning WebGL</a><br>
+			<a href="http://ds604.github.io/website/mathjax.html">Mathjax</a><br>
+			<a href="http://ds604.github.io/website/metallicMeans.html">Metallic Means</a><br>
+			<a href="http://ds604.github.io/website/pendulum.html">Pendulum</a><br>
+			
+			<a href="http://ds604.github.io/website/perlinNoiseFireball.html">Perlin Noise Fireball</a><br>
+			<a href="http://ds604.github.io/website/shapes.html">Shapes</a><br>
+			<a href="http://ds604.github.io/website/sineWave.html">Sine Wave</a><br>
+			<a href="http://ds604.github.io/website/transitionBG.html">TransitionBG</a><br>
+			<a href="http://ds604.github.io/website/worm.html">Worm</a><br>
+			
 
-                When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
-                $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-                
-                Similar to Laplace of Gaussian, the image is first smoothed by convolution with Gaussian kernel of certain width $\sigma_{1}$:
 
-\[
-G_{\sigma_{1}} (x,y) = \frac{1}{\sqrt{2\pi\sigma_{1}^2}} e^{-\frac{x^2 + y^2}{2\sigma_{1}^2}}
-\]
 
-to get
-
-\[g_{1}(x,y) = G_{\sigma_{1}}(x,y) \ast f(x,y)
-\] 
-
-With a different width $\sigma_2$, a second smoothed image can be obtained:
-
-\[
-g_{2}(x,y) = G_{\sigma_{2}}(x,y) \ast f(x,y)
-\] 
-
-We can show that the difference of these two Gaussian smoothed images, called difference of Gaussian (DoG), can be used to detect edges in the image. 
-
-\begin{align*}
-g_{1}(x,y) - g_{2}(x,y) &= G_{\sigma_{1}} \ast f(x,y) - G_{\sigma_{2}} \ast f(x,y) \\
-                        &= (G_{\sigma_{1}} - G_{\sigma_{2}}) \ast f(x,y) \\
-                        &= DoG \ast f(x,y)
-\end{align*}
-
-The DoG as an operator or convolution kernel is defined as:
-
-\[
-DoG = G_{\sigma_{1}} - G_{\sigma_{2}} = \frac{1}{\sqrt{2\pi}} \left( \frac{1}{\sigma_{1}} e^{-\frac{x^2 + y^2}{2\sigma_{1}^2}} - \frac{1}{\sigma_{2}} e^{-\frac{x^2 + y^2}{2\sigma_{2}^2}} \right)
-\]
-
-Latex                
-        
-Commutative Diagrams:                
-                $$
-\newcommand{\ra}[1]{\kern-1.5ex\xrightarrow{\ \ #1\ \ }\phantom{}\kern-1.5ex}
-\newcommand{\ras}[1]{\kern-1.5ex\xrightarrow{\ \ \smash{#1}\ \ }\phantom{}\kern-1.5ex}
-\newcommand{\da}[1]{\bigg\downarrow\raise.5ex\rlap{\scriptstyle#1}}
-\begin{array}{c}
-0 & \ra{f_1} & A & \ra{f_2} & B & \ra{f_3} & C & \ra{f_4} & D & \ra{f_5} & 0 \\
-\da{g_1} & & \da{g_2} & & \da{g_3} & & \da{g_4} & & \da{g_5} & & \da{g_6} \\
-0 & \ras{h_1} & 0 & \ras{h_2} & E & \ras{h_3} & F & \ras{h_4} & 0 & \ras{h_5} & 0 \\
-\end{array}
-$$
 
 
 <div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/ShlomitRiger.jpg"></div>

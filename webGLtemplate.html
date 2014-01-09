@@ -1,47 +1,48 @@
+<!DOCTYPE html>
 <html>
 
 <head>
 <title>Learning WebGL &mdash; lesson 1</title>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
  <style>
+        <style>
+                /*
                 body {
                         color: #B1B1B1;
                         background-color: #000011;
-                        //font-family: Arial, sans-serif;
                         font-size: 10pt;
-                }
-                div#main{
-                        width:400PX;
-                        text-align:left;
-                        border:0px solid silver;
-                        vertical-align:middle;
-                        margin: 0 auto;
-                        padding-top:12em;
-                        padding-bottom:10em;
-                }
-                div.image{
-                        text-align:center;
-                        padding-top: 1em;
-                        padding-bottom: 1em;
-                }
-                div.image > img{
-                        width:400px;
-                }
+                        margin: 0;
+                        padding: 0 0 0 0;
+                        overflow: hidden;
+                }*/
+                body, html { 
+                    width: 100%;
+                    height: 100%;
+                    border: 0px;
+                    padding: 0px;
+                    margin: 0px;
+
+                    color: #B1B1B1;
+                    background-color: #000011;
+                    font-size: 10pt;
+                  }
+                  #lesson01-canvas {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                  }
                 footer { 
-                        width: 175px; 
-                        height: 1.5em; 
-                        position: fixed; 
-                        bottom: 0;
-                        right: 0;
-                        padding: 3px 5px 5px 5px;
-                        text-align: left;
-                        z-index: 200;
+                    width: 175px; 
+                    height: 1.5em; 
+                    position: fixed; 
+                    bottom: 0;
+                    right: 0;
+                    padding: 3px 5px 5px 5px;
+                    text-align: left;
+                    z-index: 200;
                 }
-                        
-                a:link { color: #888888 ; text-decoration: none; }
-                a:visited { color: #888888 ; text-decoration: none; }
-                a:active { color: #888888 ; text-decoration: none; }
-                a:hover { color: red; text-decoration: none;  }
         </style>
 <script type="text/javascript" src="http://learningwebgl.com/lessons/lesson01/glMatrix-0.9.5.min.js"></script>
 
@@ -71,6 +72,8 @@
     function initGL(canvas) {
         try {
             gl = canvas.getContext("experimental-webgl");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
         } catch (e) {
@@ -207,10 +210,8 @@
 
     function webGLStart() {
         var canvas = document.getElementById("lesson01-canvas");
-        canvas.width = window.innerWidth;
-		    canvas.height = window.innerHeight;
 		
-		    initGL(canvas);
+		initGL(canvas);
         initShaders();
         initBuffers();
 
@@ -228,8 +229,8 @@
 
 
 <body onload="webGLStart();">
-    <canvas id="lesson01-canvas" style="border: none;"></canvas>
-  	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+	<canvas id="lesson01-canvas"></canvas>
+	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
 </body>
 
 </html>

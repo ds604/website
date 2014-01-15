@@ -29,7 +29,7 @@
     }
     $(document).ready(function(){
     polygon("regular_polygon", 3, 40, "#000000", 2);
-$("#nSides").change(function(){
+$("#nSides").keyup(function(){
 polygon("regular_polygon", $("#nSides").val(), 40, "red", 2);
 });
 

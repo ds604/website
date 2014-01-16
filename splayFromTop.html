@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                 body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+						/*font-family: Arial, sans-serif;*/
+                        font-size: 9pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+
+			<canvas id="canvas"></canvas>
+			<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+                
+<script>
+        var canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d');
+                        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+                    					
+				//drawing setup
+				ctx.strokeStyle = 'rgba(255,255,255,1)';
+				ctx.lineWidth = 0.5;
+					
+      	//axis lines
+      	ctx.beginPath();
+      	ctx.moveTo(canvas.width/2+0.5, 0);
+      	ctx.lineTo(canvas.width/2+0.5, canvas.height);
+      
+      	ctx.moveTo(0, canvas.height/2+0.5);
+      	ctx.lineTo(canvas.width, canvas.height/2+0.5);
+      	ctx.stroke();
+      	
+      	////////////////////////////////////
+      	//splay from top - version 1
+      	/*
+      	ctx.beginPath();
+      	ctx.moveTo(canvas.width/2+0.5, 0);
+      	ctx.lineTo(0, canvas.height/2 + 0.5);
+      	
+      	ctx.moveTo(canvas.width/2+0.5, 0);
+      	ctx.lineTo(canvas.width, canvas.height/2 + 0.5);
+      	ctx.stroke();
+      	*/
+      	
+      	////////////////////////////////////
+      	//splay from top - version 2
+      	var VERTICAL_CENTER = canvas.width/2+0.5,
+      		HORIZONTAL_CENTER = canvas.height/2+0.5;
+      		NUM_LINES = 90;
+      	
+      	//
+      	var lin = linspace(0,canvas.width,NUM_LINES);
+      	
+      	//begin draw, now with map over linspace partition of the width
+      	ctx.beginPath();
+      	lin.map(function(e){
+      		ctx.moveTo(VERTICAL_CENTER, 0);
+      		ctx.lineTo(e, HORIZONTAL_CENTER);
+      	});
+      	ctx.stroke();
+      	
+      	//https://code.google.com/p/mathbiol/source/browse/linspace.js?repo=compstats&r=ec6321c07ab80568a5e0bd0c0405e43b7ed95847&spec=svn.compstats.ec6321c07ab80568a5e0bd0c0405e43b7ed95847
+      	function linspace(d1,d2,n) {         
+      			j=0;
+      			var L = new Array();
+      			
+      			while (j<=(n-1)) {
+      			
+      					var tmp1 = j*(d2-d1)/(Math.floor(n)-1);
+      					var tmp2 = Math.ceil((d1+tmp1)*10000)/10000;
+      					L.push(tmp2);
+      					j=j+1;
+      			}
+      			return L;
+      	 }
+                       
+                </script>
+			
+        </body>
+</html>

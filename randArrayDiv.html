@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax TeX Test Page</title>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+
+        
+        <style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                        //font-family: Arial, sans-serif;
+                        font-size: 10pt;
+                }
+                div#main{
+                        width:400PX;
+                        text-align:left;
+                        border:0px solid silver;
+                        vertical-align:middle;
+                        margin: 0 auto;
+                        padding-top:12em;
+                        padding-bottom:10em;
+                }
+                div.image{
+                        text-align:center;
+                        padding-top: 1em;
+                        padding-bottom: 1em;
+                }
+                div.image > img{
+                        width:400px;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+        </style>
+	
+
+
+        
+</head>
+<body>
+        <div id="main">
+                <div style="text-align:center;font-weight:bold;font-size:12pt;color:#FFFFFF;padding-bottom:1.4em">A Calculus For The Present</div>                
+                <div style="text-align:center;font-size:9pt;padding-bottom:4em">DAVID SARMA</div>
+                
+			<div id="d"></div><br>
+                When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+                $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+                
+                Similar to Laplace of Gaussian, the image is first smoothed by convolution with Gaussian kernel of certain width $\sigma_{1}$:
+
+\[
+G_{\sigma_{1}} (x,y) = \frac{1}{\sqrt{2\pi\sigma_{1}^2}} e^{-\frac{x^2 + y^2}{2\sigma_{1}^2}}
+\]
+
+to get
+
+\[g_{1}(x,y) = G_{\sigma_{1}}(x,y) \ast f(x,y)
+\] 
+
+With a different width $\sigma_2$, a second smoothed image can be obtained:
+
+\[
+g_{2}(x,y) = G_{\sigma_{2}}(x,y) \ast f(x,y)
+\] 
+
+
+                
+        </div>
+	<script>
+		function rand(size){
+        var D = new Array();
+        
+        for (var i=0; i<size; i++){
+            D.push(Math.random().toFixed(20));
+        }
+        return D;
+    }
+    
+    var randoms = rand(10);
+    var foo = "foo";
+    
+    var d = document.getElementById('d');
+    var newdiv = document.createElement('div');
+    newdiv.innerHTML = 'Randoms: <br>' + randoms.join('<br>');
+    d.appendChild(newdiv);
+	</script>
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+</body>
+</html>

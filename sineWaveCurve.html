@@ -72,10 +72,18 @@
 			
 				//x value labels
 				ctx.font = '8pt Arial';
-				ctx.fillStyle = 'rgba(255,255,255,1)';				
+				ctx.fillStyle = 'rgba(255,255,255,1)';
+				ctx.lineWidth = 0.5;
 				x_pos.map(function(e){
 					if (e % 50 == 0){
-						ctx.fillText(e,e,canvas.height/2 + 20);
+						//x labels
+						ctx.fillText(e,e-9,canvas.height/2 + 20);
+						
+						//add ticks
+						ctx.beginPath();
+						ctx.moveTo(e + 0.5, canvas.height/2 + 5);
+						ctx.lineTo(e + 0.5, canvas.height/2 - 5);
+						ctx.stroke();
 					}
 				});
 		  

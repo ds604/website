@@ -27,7 +27,8 @@
 
                         <canvas id="canvas"></canvas>
                         <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
-                
+      
+			<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
       <script>
 		function linspace(d1,d2,n) {         
                               j=0;
@@ -42,6 +43,7 @@
                               }
                               return L;
                }
+		  
 			</script>
 			<script>
           var canvas = document.getElementById('canvas'),
@@ -61,11 +63,21 @@
 		  
 		  /////////////////////
 		  //sine wave circles
-		  var NUM_PARTITIONS = 200,
-		  		RADIUS = 3
+		  var NUM_PARTITIONS = 100,
+		  		RADIUS = 300
 		  		SINE_SCALE = 100;
 				
-			var	x_pos = linspace(0,canvas.width,NUM_PARTITIONS);
+				//var	x_pos = linspace(0,canvas.width,NUM_PARTITIONS);
+			var x_pos = Array.apply(null, Array(canvas.width)).map(function (_, i) {return i;});
+			
+				//x value labels
+				ctx.font = '8pt Arial';
+				ctx.fillStyle = 'rgba(255,255,255,1)';				
+				x_pos.map(function(e){
+					if (e % 50 == 0){
+						ctx.fillText(e,e,canvas.height/2 + 20);
+					}
+				});
 		  
 			ctx.strokeStyle = 'rgba(255,255,255,1)';
             ctx.lineWidth = 1;
@@ -93,7 +105,7 @@
 				ctx.beginPath();
 				ctx.moveTo(0, canvas.height/2);
 				x_pos.map(function(x_pos){
-					ctx.lineTo(x_pos, canvas.height/2 - SINE_SCALE*Math.sin(x_pos));
+					ctx.lineTo(x_pos, canvas.height/2 - SINE_SCALE*Math.sin(x_pos*2*Math.PI*0.001));
 				});
 				ctx.stroke();
 		  

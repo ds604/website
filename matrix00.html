@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body onLoad="init();">
+                <script>
+                        var ctx;
+                        var canvasWidth;
+                        var canvasHeight;
+                        
+                        function init(){
+                                var canvas = document.getElementById('canvasObject');
+                                ctx = canvas.getContext('2d');
+                                
+                                canvas.width = window.innerWidth;
+                                canvas.height = window.innerHeight;
+                                
+                                canvasWidth = canvas.width;
+                                canvasHeight = canvas.height;
+							
+								ctx.font = '7pt Arial';
+                                
+                                tick();
+                        }
+                        
+                        function tick(){
+                                draw();
+                                setTimeout(function(){tick();}, 30);
+                        }
+                        
+                        function draw(){
+								ctx.clearRect(0,0,canvasWidth,canvasHeight);
+                                for (var y=0; y<=canvasHeight; y+=10){
+                                        for (var x=0; x<=canvasWidth; x+=20){
+                                                var red = 1000*Math.random().toFixed(15);
+                                                var green = Math.ceil(Math.random()*255);
+                                                var blue = Math.ceil(Math.random()*255);
+                                                
+											//var rgbValue = "rgb(red,green,blue)";
+											//rgbValue = rgbValue.replace("red", red);
+											//rgbValue = rgbValue.replace("green", green);
+											//rgbValue = rgbValue.replace("blue", blue);
+                                                
+                                                ctx.fillStyle = "rgba(255,255,255,0.1)";
+											
+												//ctx.clearRect(0,0,canvas.width,canvas.height);
+												ctx.fillText(red,x,y);
+                                        }
+                                }
+                        }
+                        
+
+                </script>
+                <canvas id="canvasObject"></canvas>
+                <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+        </body>
+</html>

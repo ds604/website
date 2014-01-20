@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                 body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                                /*font-family: Arial, sans-serif;*/
+                        font-size: 9pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r57/three.min.js"></script>
+		<script>
+		  //http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+			// requestAnim shim layer by Paul Irish
+			window.requestAnimFrame = (function(){
+			  return  window.requestAnimationFrame       || 
+					  window.webkitRequestAnimationFrame || 
+					  window.mozRequestAnimationFrame    || 
+					  window.oRequestAnimationFrame      || 
+					  window.msRequestAnimationFrame     || 
+					  function(/* function */ callback, /* DOMElement */ element){
+						window.setTimeout(callback, 1000 / 60);
+					  };
+			})();
+		  
+		
+		// example code from mr doob : http://mrdoob.com/lab/javascript/requestanimationframe/
+		
+		var canvas, context, toggle;
+		
+		init();
+		animate();
+		
+		function init() {
+		
+			canvas = document.createElement( 'canvas' );
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		
+			context = canvas.getContext( '2d' );
+		
+			document.body.appendChild( canvas );
+		
+		}
+		
+		function animate() {
+			requestAnimFrame( animate );
+			draw();
+		
+		}
+		
+		function draw() {
+		
+			var time = new Date().getTime() * 0.002;
+			var x = Math.sin( time ) * 192 + canvas.width/2;
+			var y = Math.cos( time * 0.9 ) * 192 + canvas.height/2;
+			toggle = !toggle;
+		
+			context.fillStyle = toggle ? 'rgb(200,200,20)' :  'rgb(20,20,200)';
+			context.beginPath();
+			context.arc( x, y, 10, 0, Math.PI * 2, true );
+			context.closePath();
+			context.fill();
+		
+		}
+
+		</script>
+	</body>
+</html>

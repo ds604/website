@@ -1,110 +1,121 @@
 <!DOCTYPE html>
 <html>
-        <head>
-                <meta charset="utf-8">
-                <style>
-                 body {
-                        color: #B1B1B1;
-                        background-color: #000011;
-                                                /*font-family: Arial, sans-serif;*/
-                        font-size: 9pt;
-                        margin: 0;
-                        overflow: hidden;
-                }
-                footer { 
-                        width: 175px; 
-                        height: 1.5em; 
-                        position: fixed; 
-                        bottom: 0;
-                        right: 0;
-                        padding: 3px 5px 5px 5px;
-                        text-align: left;
-                        z-index: 200;
-                }
-                </style>
-        </head>
-        <body>
+    <head>
+    <meta charset="utf-8">
+    <style>
+     body {
+            color: #B1B1B1;
+            background-color: #000011;
+                                    /*font-family: Arial, sans-serif;*/
+            font-size: 9pt;
+            margin: 0;
+            overflow: hidden;
+    }
+    footer { 
+            width: 175px; 
+            height: 1.5em; 
+            position: fixed; 
+            bottom: 0;
+            right: 0;
+            padding: 3px 5px 5px 5px;
+            text-align: left;
+            z-index: 200;
+    }
+    </style>
+    </head>
+    <body>
 
-                <canvas id="canvas"></canvas>
-                <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+        <canvas id="canvas"></canvas>
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
 
         <script>
-			var canvas, ctx, x_pos, canvasWidth, canvasHeight,
-				t = 0;
-			
-				canvas = document.getElementById('canvas'),
-                  ctx = canvas.getContext('2d');
-                        
-                  canvas.width = window.innerWidth;
-                  canvas.height = window.innerHeight;
-                                                            
-            		//generate a range array [1,2,3,4,....,canvas.width]
-                  x_pos = Array.apply(null, Array(canvas.width)).map(function (_, i) {return i;}); 
-				
-				tick();
-			
-			function drawAxes(){
-				//drawing setup
-                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-                ctx.lineWidth = 1;
-                                        
-                //axis lines
-                ctx.moveTo(0, canvas.height/2+0.5);
-                ctx.lineTo(canvas.width, canvas.height/2+0.5);
-                ctx.stroke();
+        /////////////////////////////
+        //INITIALIZATION
+
+        var canvas, ctx, x_pos, canvasWidth, canvasHeight,
+            t = 0;
+            
+        canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d');
+                
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+                                                    
+        //generate a range array [1,2,3,4,....,canvas.width]
+        x_pos = Array.apply(null, Array(canvas.width)).map(function (_, i) {return i;}); 
+
+            
+        /////////////////////////////
+        //FUNCTIONS
+        function drawAxes(){
+            //drawing setup
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 1;
+                                    
+            //axis lines
+            ctx.moveTo(0, canvas.height/2+0.5);
+            ctx.lineTo(canvas.width, canvas.height/2+0.5);
+            ctx.stroke();
+                
+            //x value labels
+            ctx.font = '8pt Arial';
+            ctx.fillStyle = 'rgba(255,255,255,1)';
+            ctx.lineWidth = 0.5;
+            x_pos.map(function(e){
+                if (e % 50 == 0){
+                    //add x labels
+                    ctx.fillText(e,e-9,canvas.height/2 + 20);
                     
-                                //x value labels
-                                ctx.font = '8pt Arial';
-                                ctx.fillStyle = 'rgba(255,255,255,1)';
-                                ctx.lineWidth = 0.5;
-                                x_pos.map(function(e){
-                                        if (e % 50 == 0){
-                                                //add x labels
-                                                ctx.fillText(e,e-9,canvas.height/2 + 20);
-                                                
-                                                //add ticks
-                                                ctx.beginPath();
-                                                ctx.moveTo(e + 0.5, canvas.height/2 + 5);
-                                                ctx.lineTo(e + 0.5, canvas.height/2 - 5);
-                                                ctx.stroke();
-                                        }
-                                });
-			}
-			
-			
-			function drawSine(t){
-				//ctx.clearRect(0,0,canvaswWidth,canvasHeight);
-					/////////////////////
-                  	//sine wave circles
-                  	var SINE_SCALE = 100;
-					
-					//setup to draw sine curve
-                        ctx.strokeStyle = 'rgba(200,200,200,0.1)';
-                        ctx.lineWidth = 2;
-                        ctx.fillStyle = 'rgba(255,255,255,0.1)';
-                   
-                        //draw sine curve        
-                        ctx.beginPath();
-				//ctx.moveTo(0, canvas.height/2);
-                        x_pos.map(function(x_pos){
-                                ctx.lineTo(x_pos, canvas.height/2 - SINE_SCALE*Math.sin(x_pos*2*Math.PI*0.001+t));
-                        });
-                        ctx.stroke();
-				
-			}
-			
-			canvas.addEventListener('click', function(e){canvas.width = canvas.width;}, true);
-			
-			function tick(){
-				//drawAxes();
-				drawSine(t);
-				
-				t += 0.01;
-				setTimeout(function(){tick();}, 100);
-			}
+                    //add ticks
+                    ctx.beginPath();
+                    ctx.moveTo(e + 0.5, canvas.height/2 + 5);
+                    ctx.lineTo(e + 0.5, canvas.height/2 - 5);
+                    ctx.stroke();
+                }
+            });
+        }
+            
+            
+        function drawSine(t){
+            //ctx.clearRect(0,0,canvaswWidth,canvasHeight);
+            /////////////////////
+            //sine wave circles
+            var SINE_SCALE = 100;
+            
+            //setup to draw sine curve
+            ctx.strokeStyle = 'rgba(200,200,200,0.1)';
+            ctx.lineWidth = 2;
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+       
+            //draw sine curve        
+            ctx.beginPath();
+            //ctx.moveTo(0, canvas.height/2);
+            x_pos.map(function(x_pos){
+                    ctx.lineTo(x_pos, canvas.height/2 - SINE_SCALE*Math.sin(x_pos*2*Math.PI*0.001+t));
+            });
+            ctx.stroke();
+            
+        }
+            
+        /////////////////////////////
+        //HANDLERS
+        //onclick - clear canvas on mouse click
+        canvas.addEventListener('click', function(e){canvas.width = canvas.width;}, true);
+
+        /////////////////////////////
+        //GO!!!!
+
+        function tick(){
+            drawSine(t);
+            
+            t += 0.01;
+            setTimeout(function(){tick();}, 100);
+        }
+
+        tick();
                 
       </script>
-                
-                        
-        </body>
+            
+                    
+    </body>
 </html>

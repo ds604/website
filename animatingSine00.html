@@ -79,8 +79,8 @@
                   	var SINE_SCALE = 100;
 					
 					//setup to draw sine curve
-                        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = 'rgba(200,200,200,0.1)';
+                        ctx.lineWidth = 2;
                         ctx.fillStyle = 'rgba(255,255,255,0.1)';
                    
                         //draw sine curve        
@@ -93,7 +93,7 @@
 				
 			}
 			
-			canvas.addEventListener('mouseup', function(e){ctx.clearRect(0,0,canvaswWidth,canvasHeight);}, true);
+			canvas.addEventListener('click', function(e){canvas.width = canvas.width;}, true);
 			
 			function tick(){
 				//drawAxes();

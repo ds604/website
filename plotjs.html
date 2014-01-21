@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+			<canvas id="canv" width="650" height="400"></canvas>
+			<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+			
+			<script src="http://mathmed.blox.pl/resource/plot.js"></script>
+            <script>
+                    function prepData(range, amount){
+                        var arr = new Array(amount);
+                        for(var i=0; i<amount; i++){
+                            arr[i] = (Math.random()-0.5)*range;
+                        }
+                        return arr;
+                    }
+
+                    function recalc(){
+
+                        for(var i=1; i<ilosc; i++){
+                            data[i-1] = data[i];
+                        }
+                        data[ilosc-1] = data[ilosc-2] + Math.random()*1-0.5;
+
+						
+                        myp.data = data;
+                        myp.plot();
+                    }
+
+                    var ilosc = 200;
+                    var myp = new MakeDraw();
+                    myp.id = "canv";
+
+                    myp.plotColor = "rgba(200,232,53,1)";
+                    myp.gridColor = "rgba(0,0,0,0.05)";
+                    myp.fSize = 15;
+                    myp.enumerateP = 0;
+                    myp.enumerateH = 0;
+                    myp.enumerateV = 1;
+
+                    var data = prepData(10,ilosc);
+					myp.data = data;
+					myp.plot();
+					var t = setInterval('recalc()',50);
+				
+                </script>
+                
+            
+        </body>
+</html>

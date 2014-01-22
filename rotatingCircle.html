@@ -52,16 +52,21 @@
 					ctx.stroke();
 				}
 				
-				function animate(){
-					window.requestAnimationFrame(animate);
-					draw();
+				function update(ts){
+					requestAnimationFrame(update);
+					elapsed += ts - lasttime;
+					lasttime = ts;
+					
+					draw(elapsed);	
 				}
 				
-				function draw(){
+				function draw(elapsed){
 					ctx.clearRect(0,0,canvas.width,canvas.height);
-					time = new Date().getTime() * 0.0005;
-					ctx.rotate(Math.sin(Math.PI * time) * 0.7);
+					var rotationAmount = Math.sin(Math.PI /180 * elapsed * 0.005);
 					
+					ctx.rotate(rotationAmount);
+					
+					//ctx.fillText('hello world',0,0);
 					ctx.lineWidth = 1;
 					ctx.strokeStyle = "rgba(255,255,255,0.1)"
 					ctx.fillStyle = "rgba(255,0,0,0.1)"
@@ -70,17 +75,19 @@
 					//ctx.fillRect(0,0,WIDTH,HEIGHT);
 					[100].map(function(radius){
 						ctx.beginPath();
-						ctx.arc(0,0,radius,0,Math.PI*2,true);
+						ctx.arc(0,0,radius,0,90,true);
+						//ctx.shadowColor
 						ctx.stroke();					
 					});
 					
 					//ctx.beginPath();
 					//ctx.arc(0,0,30,0,2*Math.PI,true);
 					//ctx.stroke();
-					
 				}
 				
-                animate();
+				var elapsed = 0;
+				var lasttime = new Date().getTime();
+                requestAnimationFrame(update);
             </script>
                 
             

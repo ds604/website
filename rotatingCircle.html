@@ -76,7 +76,8 @@
 					[100].map(function(radius){
 						ctx.beginPath();
 						ctx.arc(0,0,radius,0,90,true);
-						//ctx.shadowColor
+						ctx.shadowColor = "rgba(255,0,0,1)";
+						ctx.shadowBlur = 15;
 						ctx.stroke();					
 					});
 					

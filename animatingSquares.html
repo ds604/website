@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+         body {
+            color: #B1B1B1;
+            background-color: #000011;
+                    /*font-family: Arial, sans-serif;*/
+            font-size: 10pt;
+            margin: 0;
+            overflow: hidden;
+        }
+        footer { 
+            width: 175px; 
+            height: 1.5em; 
+            position: fixed; 
+            bottom: 0;
+            right: 0;
+            padding: 3px 5px 5px 5px;
+            text-align: left;
+            z-index: 200;
+        }
+        </style>
+    </head>
+    <body>
+    <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+    <script type="text/javascript">
+        //Canvas setup
+        var width = window.innerWidth; var height = window.innerHeight;
+        var c = document.createElement("canvas");
+        c.setAttribute('id',    'myCanvas'); 
+        c.setAttribute('width',  width);
+        c.setAttribute('height', height); 
+        document.body.appendChild(c);
+        var ctx = document.getElementById('myCanvas').getContext("2d");
+         
+        //Keep track of the x location of three squares
+        var mx1 = 0;
+        var mx2 = 0;
+        var mx3 = 0;
+
+        var time;
+        function draw(now){
+            requestAnimationFrame(draw);
+            var elapsed = now - (time || now);
+            time = now;
+            
+            //move the squares by some (very small) number of pixels per millisecond
+            mx1 += 0.2 * elapsed;
+            mx2 += 0.1 * elapsed;
+            mx3 += 0.05 * elapsed;
+            
+            //Drawing the squares
+            ctx.clearRect(0,0,width,height);
+            ctx.fillStyle = 'red';
+            ctx.fillRect(mx1,40,20,20);
+            ctx.fillStyle = 'green';
+            ctx.fillRect(mx2,80,20,20);
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(mx3,120,20,20);
+            
+            //Reset the squares' positions to zero when they go offscreen
+            if (mx1 > width) mx1 = 0;
+            if (mx2 > width) mx2 = 0;
+            if (mx3 > width) mx3 = 0;
+        }
+
+        requestAnimationFrame(draw);
+    </script>
+    </body>
+</html>

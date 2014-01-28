@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canv"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            <script>
+                    // Adapted from https://gist.github.com/paulirish/1579671 which derived from 
+                // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+                // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+                
+                // requestAnimationFrame polyfill by Erik Möller.
+                // Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+                
+                // MIT license
+                
+                if (!Date.now)
+                    Date.now = function() { return new Date().getTime(); };
+                
+                (function() {
+                    var vendors = ['webkit', 'moz'];
+                    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+                        var vp = vendors[i];
+                        window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+                        window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+                                                   || window[vp+'CancelRequestAnimationFrame']);
+                    }
+                    if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) // iOS6 is buggy
+                        || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+                        var lastTime = 0;
+                        window.requestAnimationFrame = function(callback) {
+                            var now = Date.now();
+                            var nextTime = Math.max(lastTime + 16, now);
+                            return setTimeout(function() { callback(lastTime = nextTime); },
+                                              nextTime - now);
+                        };
+                        window.cancelAnimationFrame = clearTimeout;
+                    }
+                }());
+            </script>
+            <script>
+                                var canvas = document.getElementById("canv"),
+                                        ctx = canvas.getContext("2d"),
+                                        time;
+                                
+                                setCanvasFullscreen(canvas,ctx);
+                                setCoordinatesCenterScreen(canvas,ctx);
+
+                                
+                                function setCanvasFullscreen(canvas,ctx){
+                                        canvas.width = window.innerWidth;
+                                        canvas.height = window.innerHeight;
+                                }
+                                
+                                function setCoordinatesCenterScreen(canvas,ctx){
+                                        ctx.translate(canvas.width/2,canvas.height/2); //center coordinate system
+                                        ctx.scale(1,-1); //flip vertical
+                                }
+                                
+                                function drawCircle(x,y,radius){
+                                        ctx.beginPath();
+                                        ctx.arc(x,y,radius,0,2*Math.PI,true);
+                                        ctx.stroke();
+                                }
+                                
+                                function update(ts){
+                                        requestAnimationFrame(update);
+                                        elapsed += ts - lasttime;
+                                        lasttime = ts;
+                                        
+                                        draw(elapsed);        
+                                }
+                                
+                                function draw(elapsed){
+									//ctx.clearRect(0,0,canvas.width,canvas.height);
+									//canvas.width = canvas.width; 
+									var rotationAmount = Math.sin(Math.PI /180 * elapsed * 0.005);
+                                        
+										//ctx.rotate(rotationAmount);
+                                        
+                                        //ctx.fillText('hello world',0,0);
+                                        ctx.lineWidth = 0.1;
+                                        ctx.strokeStyle = "rgba(255,0,0,0.1)"
+                                        ctx.fillStyle = "rgba(255,0,0,0.1)"
+                                        var WIDTH = 100, 
+                                                HEIGHT = 100;
+                                        //ctx.fillRect(0,0,WIDTH,HEIGHT);
+                                        [100,150,175,187,193,196,198].map(function(radius){
+                                                ctx.beginPath();
+                                                ctx.arc(100*Math.random()-50,100*Math.random()-100,radius,2*Math.PI*Math.random()*radius,2*Math.PI*Math.random()*radius,true);
+											ctx.shadowColor = "rgba(255,255,255,0.1)";
+											ctx.shadowBlur = 1;
+                                                ctx.stroke();                                        
+                                        });
+                                        
+                                        //ctx.beginPath();
+                                        //ctx.arc(0,0,30,0,2*Math.PI,true);
+                                        //ctx.stroke();
+                                }
+                                
+                                var elapsed = 0;
+                                var lasttime = new Date().getTime();
+                requestAnimationFrame(update);
+            </script>
+                
+            
+        </body>
+</html>

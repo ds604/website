@@ -96,8 +96,8 @@
         function draw(elapsed){
             ctx.fillStyle = "rgba(0,0,0,0.02)";
             ctx.fillRect(-canvas.width/2,-canvas.height/2,canvas.width,canvas.height);
-        //canvas.width = canvas.width; 
-        var rotationAmount = Math.sin(Math.PI /180 * elapsed * 0.005);
+            //canvas.width = canvas.width; 
+            var rotationAmount = Math.sin(Math.PI /180 * elapsed * 0.005);
 
             //ctx.rotate(rotationAmount);
             
@@ -112,7 +112,7 @@
                 ctx.beginPath();
                 ctx.arc(100*Math.random()-50,100*Math.random()-50,1*radius,2*Math.PI*Math.random()*radius,2*Math.PI*Math.random()*radius,true);
                 ctx.shadowColor = "rgba(255,0,0,0.1)";
-                ctx.shadowBlur = 10;
+                ctx.shadowBlur = 1;
                 ctx.stroke();                                        
             });
             

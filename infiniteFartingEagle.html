@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canv"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            <script>
+                    // Adapted from https://gist.github.com/paulirish/1579671 which derived from 
+                // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+                // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+                
+                // requestAnimationFrame polyfill by Erik Möller.
+                // Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+                
+                // MIT license
+                
+                if (!Date.now)
+                    Date.now = function() { return new Date().getTime(); };
+                
+                (function() {
+                    var vendors = ['webkit', 'moz'];
+                    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+                        var vp = vendors[i];
+                        window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+                        window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+                                                   || window[vp+'CancelRequestAnimationFrame']);
+                    }
+                    if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) // iOS6 is buggy
+                        || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+                        var lastTime = 0;
+                        window.requestAnimationFrame = function(callback) {
+                            var now = Date.now();
+                            var nextTime = Math.max(lastTime + 16, now);
+                            return setTimeout(function() { callback(lastTime = nextTime); },
+                                              nextTime - now);
+                        };
+                        window.cancelAnimationFrame = clearTimeout;
+                    }
+                }());
+            </script>
+            <script>
+                //////////////
+                //Work
+                var Fart = function(){
+                    this.size = 0;
+                    this.minSize = Math.random() * 20;
+                    this.maxSize = Math.random() * 80 + 20;
+                    
+                    this.x = 0;
+                    this.y = 0;
+                    this.startX = 250;
+                    this.startY = 200;
+                    this.lastY = (Math.random() * 200);
+                    this.lastX = (Math.random() * 400) - 150;
+                    
+                    this.borned = Date.now();
+                    this.died = ((Math.random() * 7) * 1000) + this.borned;
+                    this.lifespan = this.died - this.borned;
+                    this.isAlive = true;
+                    
+                    this.color = {
+                        r: Math.floor((Math.random() * 80)),
+                        g: Math.floor((Math.random() * 155) + 100),
+                        b: Math.floor((Math.random() * 80)),
+                        a: 1
+                    };
+                    
+                    this.evolve = function(){
+                        var pct = (Date.now() - this.borned) / this.lifespan;
+                        this.size = (pct * this.maxSize + this.minSize);
+                        this.color.a = 1 - (1 * pct);
+                        this.x = pct * this.lastX + this.startX;
+                        this.y = pct * this.lastY + this.startY;
+                        this.isAlive = (pct < 1);
+                        return this;
+                    }
+                    
+                    return this;
+                };
+                
+                //////////////
+                //Render
+                var renderEagle = function(){
+                    ctx.fillStyle = "#5881AF";
+                    ctx.fillRect(0,0,500,700);
+                    ctx.drawImage(eagle,0,0);
+                };
+                
+                var renderFart = function(fart){
+                    var c = fart.color;
+                    ctx.beginPath();
+                    ctx.fillStyle = "rgba(" + c.r + "," + c.g + "," + c.b + "," + c.a + ")";
+                    ctx.arc(fart.x, fart.y, fart.size, 0, Math.PI*2, true);
+                    ctx.closePath();
+                    ctx.fill();
+                };
+                
+                //////////////
+                //Animation
+                var onFrame = function(timestamp){   
+                    if (fartCloud.length < maxFarts){
+                        fartCloud.push(new Fart());
+                    };
+                    
+                    renderEagle();
+                    
+                    fartCloud = fartCloud.filter(function(n,i){  
+                        renderFart(n.evolve());
+                        return n.isAlive;
+                    });
+                    
+                    requestAnimationFrame(onFrame);
+                }
+                
+                //////////////
+                //Setup
+                
+                var maxFarts = 30;
+                var fartCloud = [];
+                
+                var canvas = document.getElementById("canv"),
+                    ctx = canvas.getContext("2d");
+                				
+                canvas.width = 500;
+                canvas.height = 500;
+                
+                var eagle = new Image();
+                    eagle.src = "http://www.allaboutbirds.org/guide/PHOTO/LARGE/bald_eagle_adult2.jpg";
+                
+                requestAnimationFrame(onFrame);
+            </script>
+                
+            
+        </body>
+</html>

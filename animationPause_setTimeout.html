@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+				div { 
+				        position: absolute; 
+				        left: 10px; 
+				        padding: 50px;
+                        background: crimson; 
+                        color: white 
+                    }
+                </style>
+        </head>
+        <body>
+			<button onclick="start()">Click me to start!</button>
+            <button onclick="stop()">Click me to stop!</button>
+            <div id="animated">Hello there.</div>
+            <canvas id="canv"></canvas>
+            <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            <script>
+                    // Adapted from https://gist.github.com/paulirish/1579671 which derived from 
+                // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+                // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+                
+                // requestAnimationFrame polyfill by Erik Möller.
+                // Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+                
+                // MIT license
+                
+                if (!Date.now)
+                    Date.now = function() { return new Date().getTime(); };
+                
+                (function() {
+                    var vendors = ['webkit', 'moz'];
+                    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+                        var vp = vendors[i];
+                        window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+                        window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+                                                   || window[vp+'CancelRequestAnimationFrame']);
+                    }
+                    if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) // iOS6 is buggy
+                        || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+                        var lastTime = 0;
+                        window.requestAnimationFrame = function(callback) {
+                            var now = Date.now();
+                            var nextTime = Math.max(lastTime + 16, now);
+                            return setTimeout(function() { callback(lastTime = nextTime); },
+                                              nextTime - now);
+                        };
+                        window.cancelAnimationFrame = clearTimeout;
+                    }
+                }());
+            </script>
+            <script>
+                //////////////
+                //Work
+                var requestId = 0;
+                
+                function animate(time) {
+                  document.getElementById("animated").style.left =
+                    (time - animationStartTime) % 2000 / 4 + "px";
+                  requestId = window.requestAnimationFrame(animate);
+                }
+                function start() {
+                  animationStartTime = window.performance.now();
+                  requestId = window.requestAnimationFrame(animate);
+                }
+                function stop() {
+                  if (requestId)
+                    window.cancelAnimationFrame(requestId);
+                  requestId = 0;
+                }
+            </script>
+                
+            
+        </body>
+</html>

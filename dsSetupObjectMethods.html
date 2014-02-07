@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canv"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            <script>
+                    // Adapted from https://gist.github.com/paulirish/1579671 which derived from 
+                // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+                // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+                
+                // requestAnimationFrame polyfill by Erik Möller.
+                // Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+                
+                // MIT license
+                
+                if (!Date.now)
+                    Date.now = function() { return new Date().getTime(); };
+                
+                (function() {
+                    var vendors = ['webkit', 'moz'];
+                    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+                        var vp = vendors[i];
+                        window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+                        window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+                                                   || window[vp+'CancelRequestAnimationFrame']);
+                    }
+                    if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) // iOS6 is buggy
+                        || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+                        var lastTime = 0;
+                        window.requestAnimationFrame = function(callback) {
+                            var now = Date.now();
+                            var nextTime = Math.max(lastTime + 16, now);
+                            return setTimeout(function() { callback(lastTime = nextTime); },
+                                              nextTime - now);
+                        };
+                        window.cancelAnimationFrame = clearTimeout;
+                    }
+                }());
+            </script>
+            <script>
+					                var canvas = document.getElementById("canv"),
+                                        ctx = canvas.getContext("2d"),
+										width,
+										height,
+                                        time;
+                                
+
+				
+				var ds_setup = {
+					
+					setCanvasFullscreen : function(canvas,ctx){
+                                        canvas.width = window.innerWidth;
+                                        canvas.height = window.innerHeight;
+										width = canvas.width;
+										height = canvas.height;
+                                },
+                                
+					setCoordinatesCenterScreen : function (canvas,ctx){
+									ctx.translate(canvas.width/2,canvas.height/2); //center coordinate system
+                                    ctx.scale(1,-1); //flip vertical
+                                },
+                                
+                
+					drawEllipse : function(ctx,x,y,r,w,h){
+						ctx.beginPath();
+						ctx.save();
+						ctx.translate(x,y);
+						ctx.scale(w,h);
+						ctx.arc(0,0,r,0,Math.PI*2);
+						ctx.restore();
+					},
+					
+					drawAxes : function (ctx){
+						ctx.strokeStyle = '#FFFFFF';
+						ctx.lineWidth = 0.5;
+						
+						ctx.beginPath();
+						ctx.moveTo(0,height);
+						ctx.lineTo(0,-height);
+						ctx.stroke();
+						
+						ctx.beginPath();
+						ctx.moveTo(-width,0);
+						ctx.lineTo(width,0);
+						ctx.stroke();
+					}
+				};
+				
+				ds_setup.setCanvasFullscreen(canvas,ctx);
+                ds_setup.setCoordinatesCenterScreen(canvas,ctx);
+				ds_setup.drawAxes(ctx);
+				
+							
+				/*
+				drawEllipse(ctx,200,200,100,2,1);
+				ctx.fill();
+				ctx.strokeStyle = 'red';
+				ctx.lineWidth = 12;
+				ctx.stroke();*/
+            </script>
+                
+            
+        </body>
+</html>

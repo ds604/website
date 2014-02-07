@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #0c0c0c;
+                        background-color: #0c0c0c;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+            <div id="container" style="width:500px; height:500px; background-color:#0c0c0c"></div>            
+			<canvas id="canv"></canvas>
+            <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+			<script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script>
+            <script>
+				var container, camera, scene, renderer, geometry, mesh;
+
+                init();
+                animate();
+                
+                function init(){
+                    container = document.getElementById("container");
+                    
+                    //Create three.js renderer, add it to our div
+                    renderer = new THREE.WebGLRenderer();
+                    renderer.setSize(container.offsetWidth, container.offsetHeight);
+                    container.appendChild(renderer.domElement);
+                    
+                    //Create a new Three.js scene
+                    scene = new THREE.Scene();
+                    
+                    //Create a camera and add it to the scene
+                    camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 1, 4000);
+                    camera.position.set(0,0,3.3333);
+                    scene.add(camera);
+                    
+                    //Now create a rectangle and add it to the scene
+                    geometry = new THREE.SphereGeometry(1,30,30);
+                    material = new THREE.MeshNormalMaterial();
+                    mesh = new THREE.Mesh(geometry, material);
+                    scene.add(mesh);
+                    
+                    //Render it
+                    //renderer.render(scene, camera);
+                }
+                
+                function animate(){
+                    requestAnimationFrame(animate);
+                    render();
+                }
+                
+                function render(){
+                    mesh.rotation.x += 0.01;
+                    mesh.rotation.y += 0.02;
+                    
+                    renderer.render(scene, camera);
+                }
+            </script>
+                
+            
+        </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canvas"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            
+            <script>
+                 var canvas = document.getElementById('canvas'),
+				ctx = canvas.getContext('2d'),
+				 width, height;
+				
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+				width = canvas.width;
+				height = canvas.height;
+				
+				//ctx.fillStyle = 'rgba(120,0,0,1)';
+				ctx.shadowColor = 'rgba(0,0,0,0.4)';
+				ctx.shadowOffsetX = 2;
+				ctx.shadowOffsetY = 2;
+				ctx.shadowBlur = 50;
+				
+				//draw grid of squares
+				function drawGrid(){
+					var x_range = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+					var y_range = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+					var x_spacing = width * 1.1;
+					var y_spacing = height * 1.1;
+					var r,g,b,a,rgba;
+					
+					function drawStuff(x,y){
+						//random color
+						r = Math.floor(Math.random()*255 + 100);
+						g = Math.floor(Math.random()*255 + 250);
+						b = Math.floor(Math.random()*255 + 250);
+						a = Math.random() * 1 + 1;
+						rgba = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+						ctx.fillStyle = rgba;
+						
+						//random shadow
+						ctx.shadowOffsetX = Math.random() * 50;
+						ctx.shadowOffsetY = Math.random() * 50;
+						ctx.shadowBlur = Math.random() * 200;
+						 //ctx.fillRect(x*x_spacing,y*y_spacing,Math.random()*40,Math.random()*40);
+						ctx.fillRect(Math.random()*x_spacing - 100,Math.random()*y_spacing - 100,Math.random()*200,Math.random()*200);
+					}
+					
+					x_range.forEach(function(x){ 
+						y_range.forEach( function(y) {
+							drawStuff(x,y); })
+									   });
+				}
+				
+				function draw(){
+					ctx.fillStyle = 'rgba(0,0,0,1)';
+					ctx.fillRect(0,0,width,height);
+					
+					drawGrid();
+				}
+				
+				drawGrid();
+				//setInterval(draw, 100);
+				
+				//linspace.forEach(function(x){ ctx.fillRect(x*40,0,20,20); });
+				//ctx.fillRect(0,0,10,10);
+				
+				canvas.addEventListener("click", function(e){
+					draw();
+				}, true);
+            </script>
+                
+            
+        </body>
+</html>

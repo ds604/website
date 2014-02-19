@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                 body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                                /*font-family: Arial, sans-serif;*/
+                        font-size: 9pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+
+                <canvas id="canvas"></canvas>
+                <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+        <script>
+                  var canvas = document.getElementById('canvas'),
+                  c = canvas.getContext('2d');
+                        
+                  canvas.width = window.innerWidth;
+                  canvas.height = window.innerHeight;
+					var width = canvas.width,
+						height = canvas.height;
+			
+					var	r,g,b,a,
+						size;
+					
+					//c.strokeStyle = 'rgba(150,0,0,0.1)';
+					
+					for (var i = 0; i < 80000; i++){
+						r = Math.floor(Math.random()*55+200);
+						g = Math.floor(Math.random()*55+200);
+						b = Math.floor(Math.random()*55+200);
+						a = 0.02;
+						c.strokeStyle = 'rgba(' +r+ ',' +g+ ',' +b+ ',' +a+ ')';
+						
+						//shadow
+						//c.shadowOffsetX = 10;
+						//c.shadowOffsetY = 10;
+						//c.shadowBlur = 10;
+						
+						//centered lines
+						/*
+						c.beginPath();
+						c.moveTo(center_x, center_y);
+						c.lineTo((Math.random()*600)-100, (Math.random()*600)-100);
+						c.stroke();*/
+						
+						//centered squares
+						//size = Math.random()*400;
+						//c.strokeRect(Math.random()*400,Math.random()*400,size,size);
+						
+						c.beginPath();
+						c.moveTo(Math.random()*width,Math.random()*height);
+						c.lineTo(Math.random()*width,Math.random()*height);
+						c.stroke();
+					}
+
+                       
+      </script>
+                
+                        
+        </body>
+</html>

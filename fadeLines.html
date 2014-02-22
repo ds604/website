@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                 body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                                /*font-family: Arial, sans-serif;*/
+                        font-size: 9pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+
+                <canvas id="canvas"></canvas>
+                <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+        <script>
+                  var canvas = document.getElementById('canvas'),
+                  c = canvas.getContext('2d');
+                        
+                  canvas.width = window.innerWidth;
+                  canvas.height = window.innerHeight;
+					var width = canvas.width,
+						height = canvas.height;
+
+					var	r,g,b,a,
+						size, fade;
+
+					//c.strokeStyle = 'rgba(150,0,0,0.1)';
+
+                function setup(){
+                    fade = 1;
+                    //fill canvas with lines
+                					for (var i = 0; i < 70000; i++){
+                						r = Math.floor(Math.random()*55+200);
+                						g = Math.floor(Math.random()*55+200);
+                						b = Math.floor(Math.random()*55+200);
+                						a = 0.02;
+                						c.strokeStyle = 'rgba(' +r+ ',' +g+ ',' +b+ ',' +a+ ')';
+                
+                
+                
+                						c.beginPath();	            c.moveTo(Math.random()*width,Math.random()*height);						c.lineTo(Math.random()*width,Math.random()*height);
+                						c.stroke();
+                					}
+                }
+                
+                function draw(){
+                    //fade down
+                    if (fade){
+                        a = Math.random() * 0.00399;
+                        c.fillStyle = 'rgba(0,0,0,' +a+ ')';
+                        c.fillRect(0,0,width,height);
+                    }
+                    
+                    r = Math.floor(Math.random()*255+200);
+                	g = Math.floor(Math.random()*255+200);
+                	b = Math.floor(Math.random()*255+200);
+                	a = Math.random()*0.06;
+                	c.strokeStyle = 'rgba(' +r+ ',' +g+ ',' +b+ ',' +a+ ')';
+                
+                    for (var i = 0; i<1; i++){
+                        c.beginPath(); 
+                        c.moveTo(Math.random()*width,Math.random()*height);
+                        c.lineTo(Math.random()*width,Math.random()*height);
+                        c.stroke();
+                    }
+                }
+                
+                canvas.addEventListener("click", function(e){
+                    fade = !fade;
+                }, true);
+                
+                setup();
+                setInterval(draw, 1);
+      </script>
+                
+                        
+        </body>
+</html>

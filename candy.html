@@ -28,43 +28,46 @@
                 <canvas id="canvas"></canvas>
                 <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
         <script>
-                  var c = document.getElementById('canvas').getContext('2d');
-				var r,g,b,a,width,height;
-			
-				canvas.width = window.innerWidth;
-				canvas.height = window.innerHeight;
-				var canvasWidth = canvas.width;
-				var canvasHeight = canvas.height;
-			
-				c.shadowOffsetX = 10;
-				c.shadowOffsetY = 10;
-				c.shadowBlur = 10;
-				c.shadowColor = 'rgba(0,0,0,.3)';
-				c.fillStyle =  'rgba(0,0,0,1)';
-				
-				for (var i=0; i < 1500; i++){
-					//shadow
-					var shadow = Math.random() * 100 * 1/(i*0.009);
-					c.shadowOffsetX = shadow;
-					c.shadowOffsetY = shadow;
-					c.shadowBlur = shadow;
-					
-					//color
-					r = Math.floor(Math.random()*255 + 150);
-					g = Math.floor(Math.random()*55 + 200);
-					b = Math.floor(Math.random()*55 + 200);
-					a = 1;    
-					c.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-					
-					//dimensions
-					var dimensionMult = 50;
-					width = Math.random() * dimensionMult;
-					height = Math.random() * dimensionMult;
-					//c.fillRect(Math.random()*640-dimensionMult/2,Math.random()*480-dimensionMult/2,width,height);
-					c.beginPath();
-					c.arc(Math.random()*canvasWidth, Math.random()*canvasHeight, width, 0, Math.PI * 2, false);
-					c.fill();
-				}
+               var canvas = document.getElementById('canvas');
+                var c = canvas.getContext('2d');
+                var r,g,b,a,width,height;
+                c.shadowOffsetX = 10;
+                c.shadowOffsetY = 10;
+                c.shadowBlur = 10;
+                c.shadowColor = 'rgba(0,0,0,.3)';
+                c.fillStyle =  'rgba(0,0,0,1)';
+                
+                function draw(){
+                    for (var i=0; i < 500; i++){
+                        //shadow
+                        var shadow = Math.random() * 100 * 1/(i*0.009);
+                        c.shadowOffsetX = shadow;
+                        c.shadowOffsetY = shadow;
+                        c.shadowBlur = shadow;
+                        
+                        //color
+                        r = Math.floor(Math.random()*255 + 150);
+                        g = Math.floor(Math.random()*55 + 200);
+                        b = Math.floor(Math.random()*55 + 200);
+                        a = 1;    
+                        c.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+                        
+                        //dimensions
+                        var dimensionMult = 50;
+                        width = Math.random() * dimensionMult;
+                        height = Math.random() * dimensionMult;
+                        //c.fillRect(Math.random()*640-dimensionMult/2,Math.random()*480-dimensionMult/2,width,height);
+                        c.beginPath();
+                        c.arc(Math.random()*640, Math.random()*480, width, 0, Math.PI * 2, false);
+                        c.fill();
+                    }
+                }
+                
+                canvas.addEventListener('click', function(e){
+                    draw();
+                }, true);
+                
+                draw()
       </script>
                 
                         

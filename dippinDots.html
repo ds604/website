@@ -31,6 +31,12 @@
                var canvas = document.getElementById('canvas');
                 var c = canvas.getContext('2d');
                 var r,g,b,a,width,height;
+                
+                canvas.width = document.innerWidth;
+                canvas.height = document.innerHeight;
+                width = canvas.width;
+                height = canvas.height;
+                
                 c.shadowOffsetX = 10;
                 c.shadowOffsetY = 10;
                 c.shadowBlur = 10;

@@ -30,7 +30,7 @@
         <script>
                var canvas = document.getElementById('canvas');
                 var c = canvas.getContext('2d');
-                var r,g,b,a,width,height;
+                var r,g,b,a,width,height,radius;
                 
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
@@ -60,11 +60,11 @@
                         
                         //dimensions
                         var dimensionMult = 50;
-                        width = Math.random() * dimensionMult;
-                        height = Math.random() * dimensionMult;
+                        radius = Math.random() * dimensionMult;
+                        //height = Math.random() * dimensionMult;
                         //c.fillRect(Math.random()*640-dimensionMult/2,Math.random()*480-dimensionMult/2,width,height);
                         c.beginPath();
-                        c.arc(Math.random()*640, Math.random()*480, width, 0, Math.PI * 2, false);
+                        c.arc(Math.random()*width, Math.random()*height, radius, 0, Math.PI * 2, false);
                         c.fill();
                     }
                 }

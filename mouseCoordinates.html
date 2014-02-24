@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canvas"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+           
+            <script>
+              var canvas = document.getElementById("canvas"),
+                    c = canvas.getContext("2d");
+                var width,height;
+                
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                width = canvas.width;
+                height = canvas.height;
+                c.fillStyle = 'rgba(255,255,255,1)';
+                
+                function getPos(e, canvas){
+                    var bbox = canvas.getBoundingClientRect();
+                    
+                    return {
+                        x: e.clientX - bbox.left * (canvas.width / bbox.width),
+                        y: e.clientY - bbox.top * (canvas.height / bbox.height)
+                    }
+                }
+                
+                canvas.addEventListener('click', function(e){
+                    var position = getPos(e,canvas);
+                    c.clearRect(0,0,200,30);
+                    c.fillText('x: ' + position.x,10,10);
+                    c.fillText('y: ' + position.y,10,20);
+                    
+                    //alert(position.x + ',' + position.y);
+                }, false);
+            </script>
+                
+            
+        </body>
+</html>

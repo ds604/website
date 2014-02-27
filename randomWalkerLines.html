@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canvas"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            <script>
+                    // Adapted from https://gist.github.com/paulirish/1579671 which derived from 
+                // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+                // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+                
+                // requestAnimationFrame polyfill by Erik Möller.
+                // Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+                
+                // MIT license
+                
+                if (!Date.now)
+                    Date.now = function() { return new Date().getTime(); };
+                
+                (function() {
+                    var vendors = ['webkit', 'moz'];
+                    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+                        var vp = vendors[i];
+                        window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+                        window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+                                                   || window[vp+'CancelRequestAnimationFrame']);
+                    }
+                    if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) // iOS6 is buggy
+                        || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+                        var lastTime = 0;
+                        window.requestAnimationFrame = function(callback) {
+                            var now = Date.now();
+                            var nextTime = Math.max(lastTime + 16, now);
+                            return setTimeout(function() { callback(lastTime = nextTime); },
+                                              nextTime - now);
+                        };
+                        window.cancelAnimationFrame = clearTimeout;
+                    }
+                }());
+            </script>
+            <script>
+                var canvas = document.getElementById('canvas'),
+                    c = canvas.getContext('2d'),
+                    width,height,x_pos,y_pos,snake;
+                
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                width = canvas.width;
+                height = canvas.height;
+                
+                function init(){
+                    x_pos = width/2;
+                    y_pos = height/2;
+                    snake = [{x:x_pos, y:y_pos},{x:x_pos, y:y_pos},{x:x_pos, y:y_pos},{x:x_pos, y:y_pos},{x:x_pos, y:y_pos}];
+                }
+                
+                function draw(){
+					//c.fillStyle = 'rgba(0,0,0,0.004)';
+					//c.fillRect(0,0,width,height);
+                    
+                    c.fillStyle = 'rgba(255,0,0,0.05)';
+                    c.strokeStyle = 'rgba(255,0,0,0.1)';
+                    c.beginPath();
+                    c.arc(x_pos,y_pos,5,0,Math.PI*2,false);                    
+                    //c.fill();
+                    
+                    c.moveTo(x_pos,y_pos);
+                    c.beginPath();
+                    snake.map(function(pos){
+                        c.lineTo(pos.x,pos.y);
+                    });
+                    c.stroke();
+                    
+                
+					x_pos += 20 * Math.random() - 10;
+					y_pos += 20 * Math.random() - 10;
+                    
+                    snake[4] = snake[3];
+                    snake[3] = snake[2];
+                    snake[2] = snake[1];
+                    snake[0] = {x:x_pos, y:y_pos};
+                	
+                	requestAnimationFrame(draw);
+                }
+
+                
+                init();
+                requestAnimationFrame(draw);
+
+            </script>
+                
+            
+        </body>
+</html>

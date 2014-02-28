@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+        </head>
+        <body>
+                        <canvas id="canvas"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+            <script>
+              window.addEventListener('load', eventWindowLoaded, false);
+                function eventWindowLoaded(){
+                  canvasApp();
+                }
+                
+                function canvasSupport(){
+                  return Modernizr.canvas;
+                }
+                
+                function canvasApp(){
+                  if (!canvasSupport()){
+                    return;
+                  }
+                  
+                  function drawScreen(){
+                    c.fillStyle = '#EEEEEE';
+                    c.fillRect(0,0,theCanvas.width,theCanvas.height);
+                    //Box
+                    c.strokeStyle = '#000000';
+                    c.strokeRect(1,1,theCanvas.width-2,theCanvas.height-2);
+                    
+                    //stop on hitting the ground
+                    /*
+                    if(ball.y + ball.radius <= theCanvas.height){
+                      ball.velocityy += gravity;
+                    } else {
+                      ball.velocityx = 0;
+                      ball.velocityy = 0;
+                      ball.y = theCanvas.height - ball.radius;
+                    }*/
+                    
+                    //bounce off the ground
+                    ball.velocityy += gravity;
+                    if ((ball.y + ball.radius) > theCanvas.height){
+                      ball.velocityy = -(ball.velocityy) * ball.elasticity;
+                    }
+                    
+                    
+                    ball.y += ball.velocityy;
+                    ball.x += ball.velocityx;
+                    
+                    c.fillStyle = '#000000';
+                    c.beginPath();
+                    c.arc(ball.x,ball.y,ball.radius,0,Math.PI*2,true);
+                    c.closePath();
+                    c.fill();
+                    
+                    //trail
+                    c.fillStyle = 'rgba(0,0,0,0.4)';
+                    trail.push({x:ball.x,y:ball.y});
+                    for (var i = 0; i < trail.length; i++){
+                      c.beginPath();
+                      c.arc(trail[i].x,trail[i].y,2,0,Math.PI*2,true);
+                      c.closePath();
+                      c.fill();
+                    }
+                  }
+                  
+                  var speed   = 6,
+                      gravity = 0.1,
+                      elasticity = 0.5;
+                      angle   = 285,
+                      radians = angle * Math.PI/180,
+                      radius  = 15,
+                      vx      = Math.cos(radians) * speed,
+                      vy      = Math.sin(radians) * speed;
+                  theCanvas = document.getElementById("canvas");
+                  c = theCanvas.getContext("2d");
+                	canvas.width = window.innerWidth;
+                	canvas.height = window.innerHeight;
+                  
+                  var p1 = {x:            20, 
+                            y:            theCanvas.height - radius};
+                  var ball = {x:          p1.x, 
+                              y:          p1.y, 
+                              velocityx:  vx, 
+                              velocityy:  vy, 
+                              radius:     radius,
+                              elasticity: elasticity};
+                  var trail = [];
+                  
+                  function gameLoop(){
+                    window.setTimeout(gameLoop, 20);
+                    drawScreen();
+                  }
+                  
+                  gameLoop();
+                }
+            </script>
+                
+            
+        </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <style>
+                
+					body {
+                        color: #B1B1B1;
+                        background-color: #000000;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+					canvas{
+						/*display:block;
+						margin-left:auto;
+						margin-right:auto;
+						top:300px;*/
+						
+						margin: 0 auto;
+						width: 600px;
+						height: 600px;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin: -300px 0 0 -300px;
+					}
+                </style>
+        </head>
+        <body>
+			<canvas id="canvas"></canvas>
+                        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+            
+            <script>
+                var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d'),
+                HEIGHT = 600,
+                WIDTH = 600,
+                TO_RADIANS = Math.PI / 360;
+                
+            var raf = (function(){
+              return  window.requestAnimationFrame       || 
+                      window.webkitRequestAnimationFrame || 
+                      window.mozRequestAnimationFrame    || 
+                      window.oRequestAnimationFrame      || 
+                      window.msRequestAnimationFrame     || 
+                      function( callback ){
+                        window.setTimeout(callback, 1000 / 60);
+                      };
+            })();
+            
+            function clear(style) {
+              ctx.save();
+              ctx.fillStyle = style || 'rgba(0,0,0,0.01)';
+              ctx.fillRect(0, 0, WIDTH, HEIGHT);
+              ctx.restore();
+            }
+            
+            function square(x, y, w, h) {
+              ctx.beginPath();
+              ctx.rect(WIDTH/2 + x, HEIGHT/2 + y, w, h);
+              ctx.closePath();
+              ctx.fill();
+            }
+            
+            function circle(x, y, w, h) {
+              ctx.beginPath();
+              ctx.arc(WIDTH/2 + x, HEIGHT/2+ y, w, 0, Math.PI*2, true);
+              ctx.closePath();
+              ctx.fill();
+            }
+            
+            canvas.width = WIDTH;
+            canvas.height = HEIGHT;
+            
+            var offsetX = 0,
+                offsetY = 0,
+                x_prev,
+                y_prev,
+                x = 0,
+                y = 0;
+            
+            function draw() {
+              //clear();
+            
+              offsetX += Math.random() * 80;
+              offsetY += Math.E * 40;
+              x = Math.cos(WIDTH + offsetX * TO_RADIANS) * WIDTH/4;
+              y = Math.sin(HEIGHT + offsetY * TO_RADIANS) * HEIGHT/4;
+              
+              ctx.fillStyle = 'cyan';
+              //circle(x, y, 2, 10);
+            //   offsetX += 2;
+              
+              //draw line
+              ctx.lineWidth = 2;
+              ctx.strokeStyle = 'hsla(0,' + Math.floor(Math.random() * 50 + 30) + '%,' + Math.floor(Math.random() * 0 + 50) + '%,0.05)';
+              ctx.beginPath();
+              ctx.moveTo(x_prev,y_prev);
+              ctx.lineTo(WIDTH/2 + x,HEIGHT/2 + y);
+              ctx.stroke();
+              
+              x_prev = WIDTH/2 + x;
+              y_prev = HEIGHT/2 + y;
+              
+              raf(draw, 1);
+            }
+            
+            clear('black');
+            draw();
+            </script>
+                
+            
+        </body>
+</html>

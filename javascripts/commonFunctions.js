@@ -7,6 +7,12 @@ linspace = function(start, stop, divisions){
         
         return 
     };
+    
+/////////////////////////////////////////////////////
+//Random number between min and max
+var randRange = function(min, max){ 
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
 
 /////////////////////////////////////////////////////
 //Linear interpolation of 'amount' values between start and stop

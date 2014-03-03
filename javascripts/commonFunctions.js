@@ -56,3 +56,21 @@ Array.prototype.add = function( b ) {
     }
     return c;
 };
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+//String replacement
+//Example of string replacement
+//var bar1 = 'foobar',
+//    bar2 = 'jumped',
+//   bar3 = 'dog';
+//
+//'The lazy {} {} over the {}'.format(bar3, bar2, bar1);
+
+String.prototype.format = function () {
+  var i = 0, args = arguments;
+  return this.replace(/{}/g, function () {
+    return typeof args[i] != 'undefined' ? args[i++] : '';
+  });
+};
+

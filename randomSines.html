@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="graph function family" />
+  <meta charset="utf-8">
+	<style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+  <title>JS Bin</title>
+</head>
+<body>
+  <canvas id="canvas" style="background-color:black;"></canvas>
+	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+
+	<script>
+		var canvas = document.getElementById('canvas'),
+    c = canvas.getContext('2d');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		
+    c.scale(1,-1);
+    c.translate(0,-canvas.height);
+    
+    //////////////////////////////
+    //coordinates setup
+    var x_vals = [];
+    for (var i = 0; i <= canvas.width; i++){
+      x_vals.push(i/canvas.width);
+    }
+    
+    var y_vals = [];
+    
+    //y_vals[0] = x_vals.map(function(x){ return f(x); });
+    //y_vals[1] = x_vals.map(function(x){ return g(x); });
+    
+    for (var i = 0; i < 1000; i++ ){
+      height = i * 0.0035 * Math.random()*0.9;
+      freq = i*0.2 * Math.random();
+      offset = i*1 * Math.random();
+      y_vals[i] = x_vals.map(function(x){ return g(x,height,freq,offset); });
+    }
+    
+    //////////////////////////////
+    //functions to graph
+    function f(x,exponent){
+      a = Math.pow(x,exponent);
+      return a;
+    }
+    
+    function g(x,height,freq,offset){
+      return height * Math.sin(2*Math.PI * freq * x + offset) + 0.5;
+    }
+    
+    function h(x){
+      return Math.noise();
+    }
+    
+    ///////////////////////////////
+    //draw graph
+    function graph(y){
+      c.strokeStyle = 'rgba(255,255,255,0.1)';
+      c.beginPath();
+      for (var i = 0; i < x_vals.length; i++){
+        c.lineTo(x_vals[i]*canvas.width, y[i]*canvas.height);
+      }
+      c.stroke();
+    }
+    
+    //graph a family of functions
+    for (var i = 0; i < 200; i++){
+      graph(y_vals[i]);
+    }
+	</script>
+</body>
+</html>

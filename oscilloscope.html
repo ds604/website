@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="graph function family" />
+  <meta charset="utf-8">
+	<style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+  <title>JS Bin</title>
+</head>
+<body>
+  <canvas id="canvas" style="background-color:black;"></canvas>
+	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+
+	<script>
+		var can = document.getElementById("canvas"),
+    c = can.getContext("2d"),
+    width,height,img;
+		
+		can.width = window.innerWidth;
+		can.height = window.innerHeight;
+    width = can.width;
+    height = can.height;
+    
+    
+    var inMemCan = document.createElement('canvas');
+    inMemCan.width = width;
+    inMemCan.height = height;
+    var inMemCtx = inMemCan.getContext('2d');
+    
+    /*
+    c.fillRect(0,0,10,10);
+    
+    img = c.getImageData(0,0,width,height);
+    c.clearRect(0,0,width,height);
+    c.putImageData(img,11,0);
+    
+    c.fillRect(0,0,10,10);
+    
+    img = c.getImageData(0,0,width,height);
+    c.clearRect(0,0,width,height);
+    c.putImageData(img,11,0);
+    
+    c.fillRect(0,0,10,10);
+    */
+    
+    var t = 0;
+    function draw(){
+    	//move canvas over
+    	img = c.getImageData(0,0,width,height);
+      c.clearRect(0,0,width,height);
+      c.putImageData(img,21,0);
+      
+    	//draw square
+      c.fillStyle = 'rgba(' + Math.floor(255*Math.random()) + ',0,0,1)';
+      t += 0.1;
+      y = 100*Math.sin(2*Math.PI*t);
+    	c.fillRect(0,height/2+y,20,20);
+    	
+    	requestAnimationFrame(draw);
+    }
+    
+    draw();
+	</script>
+</body>
+</html>

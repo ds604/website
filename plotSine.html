@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="graph function family" />
+  <meta charset="utf-8">
+	<style>
+                            body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                                /*font-family: Arial, sans-serif;*/
+                        font-size: 10pt;
+                        margin: 0;
+                        overflow: hidden;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+                </style>
+  <title>JS Bin</title>
+</head>
+<body>
+  <canvas id="canvas" style="background-color:black;"></canvas>
+	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+
+	<script>
+    var can = document.getElementById('canvas'),
+        c = can.getContext('2d'),
+        width,height;
+    		canvas.width = window.innerWidth;
+    		canvas.height = window.innerHeight;
+    width = canvas.width;
+    height = canvas.height;
+    c.scale(1,-1);
+    c.translate(0,-canvas.height/2);
+    
+    c.fillStyle = 'white';
+    c.strokeStyle = 'white';
+    c.lineWidth = 1;
+    
+    //function params
+    var freq = 1,
+        amp = 1,
+        offset = 0,
+        x = [],
+        y = [];
+    
+    //create arrays
+    for (var i = 0; i < canvas.width; i++){
+      x.push(i);
+      y.push(amp*100*Math.sin(2*Math.PI*i * 1/width * freq + offset));
+    }
+    
+    //graph it
+    c.beginPath();
+    for (var i = 0; i < canvas.width; i++){
+      c.lineTo(x[i],y[i]);
+    }
+    c.stroke();
+	</script>
+</body>
+</html>

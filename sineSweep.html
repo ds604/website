@@ -23,86 +23,87 @@
                         z-index: 200;
                 }
                 </style>
-  <title>JS Bin</title>
+  <title>Sine Sweep</title>
 </head>
 <body>
   <canvas id="canvas"></canvas>
 	<footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
 
 	<script>
-  var can = document.getElementById('canvas'),
-      c = can.getContext('2d'),
-      width,height;
-  		canvas.width = window.innerWidth;
-  		canvas.height = window.innerHeight;
-  width = canvas.width;
-  height = canvas.height;
-  c.scale(1,-1);
-  c.translate(0,-canvas.height/2);
+var can = document.getElementById('canvas'),
+    c = can.getContext('2d'),
+    width,height;
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+width = canvas.width;
+height = canvas.height;
+c.scale(1,-1);
+c.translate(0,-canvas.height/2);
+
+c.fillStyle = 'white';
+c.strokeStyle = 'white';
+c.lineWidth = 1;
+
+
+function sine(){
+  //function params
+  this.freq = 1;
+  this.amp = 1;
+  this.offset = 0;
+  this.x = [];
+  this.y = [];
+
+  //create arrays
+  this.createArrays = function createArrays() {
+    for (var i = 0; i < canvas.width; i++){
+    this.x.push(i);
+    this.y.push(this.amp*100*Math.sin(2*Math.PI*i * 1/width * this.freq + this.offset));
+    }
+  };
   
-  c.fillStyle = 'white';
-  c.strokeStyle = 'white';
-  c.lineWidth = 1;
-  
-  
-  function sine(){
-    //function params
-    this.freq = 1;
-    this.amp = 1;
-    this.offset = 0;
-    this.x = [];
-    this.y = [];
-  
-    //create arrays
-    this.createArrays = function createArrays() {
-      for (var i = 0; i < canvas.width; i++){
-      this.x.push(i);
-      this.y.push(this.amp*100*Math.sin(2*Math.PI*i * 1/width * this.freq + this.offset));
-      }
-    };
-    
-    //update offset
-    this.updateOffset = function updateOffset(velocity){
-      for (var i = 0; i < canvas.width; i++){
-        this.x[i] -= Math.random();
-        this.y[i] -= Math.random()*0.1;
-      }
-    };
-  
-    //graph it
-    this.graph = function graph(){
-      c.beginPath();
-      for (var i = 0; i < canvas.width; i++){
-        c.lineTo(this.x[i],this.y[i]);
-      }
-      c.stroke();
-    };
-  }
-  
-  //init
-  c.strokeStyle = 'rgba(255,255,255,0.05)';
-  var sin = [];
+  //update offset
+  this.updateOffset = function updateOffset(velocity){
+    for (var i = 0; i < canvas.width; i++){
+      this.x[i] -= Math.random();
+      this.y[i] -= Math.random()*0.1;
+    }
+  };
+
+  //graph it
+  this.graph = function graph(){
+    c.beginPath();
+    for (var i = 0; i < canvas.width; i++){
+      c.lineTo(this.x[i],this.y[i]);
+    }
+    c.stroke();
+  };
+}
+
+//init
+c.strokeStyle = 'rgba(255,255,255,0.05)';
+var sin = [];
+for (var i = 1; i < 100; i++){
+  sin[i] = new sine();
+  sin[i].offset = i*0.02;
+  sin[i].amp = i*0.05;
+  sin[i].freq = i*0.1;
+  sin[i].createArrays();
+  sin[i].graph();
+}
+
+//draw loop
+function draw(){
   for (var i = 1; i < 100; i++){
-    sin[i] = new sine();
-    sin[i].offset = i*0.02;
-    sin[i].amp = i*0.05;
-    sin[i].freq = i*0.1;
-    sin[i].createArrays();
+    //c.scale(1,1);
+    //c.translate(0,0);
+    //c.fillRect(0,0,width,height);
+    sin[i].updateOffset();
     sin[i].graph();
   }
-  
-  //draw loop
-  function draw(){
-    for (var i = 1; i < 100; i++){
-      //c.scale(1,1);
-      //c.translate(0,0);
-      //c.fillRect(0,0,width,height);
-      sin[i].updateOffset();
-      sin[i].graph();
-    }
-  }
-  
-  setInterval(draw, 100);
+  requestAnimationFrame(draw);
+}
+
+draw();
 	</script>
 </body>
 </html>

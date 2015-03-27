@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Integral DS</title>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+
+        
+        <style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                        //font-family: Arial, sans-serif;
+				margin:0;
+                        font-size: 10pt;
+                }
+                div#main{
+                                /*width:403PX;*/
+                        text-align:left;
+                        border:0px solid silver;
+                        vertical-align:middle;
+                        margin: 0 auto;
+                        padding-top:2em;
+                        padding-bottom:2em;
+				padding-left: 2em;
+                }
+                div.image {
+                        text-align:center;
+                        padding-top: 1em;
+                        padding-bottom: 1em;
+                                                border: 1px ridge #222222;
+                                                float: left;
+                                                display: block;
+                }
+                div.image > img{
+                        width:400px;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+			.image{
+				height:220px;
+			}
+			.image > img{
+				height:220px;
+			}
+        </style>
+
+        
+</head>
+<body>
+        <div id="main">
+                <!--<div style="text-align:center;font-size:12pt;color:#FFFFFF;padding-bottom:1.4em">INTEGRAL.DAVIDSARMA.ORG</div>                
+                <div style="text-align:center;font-size:9pt;padding-bottom:4em">DAVID SARMA</div>-->
+                        
+                        <!--
+                        <div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140122_00.png">01.22.2014</div>
+                        <div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140120_00.png">01.20.2014</div>
+                        <div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140102_00.png">01.02.2014</div>
+                        <div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/integralDS.jpg">01.09.2014</div>
+                        -->
+                
+
+                   
+<div id="content" width="100%">    
+
+<div>
+	<a href="http://ds604.github.io/website/shadowRectangles.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140216_00.png" width="30%" style="float:left"/> </div></a>
+	<a href="http://ds604.github.io/website/sineDivide.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140216_01.png" width="30%" style="float:left"/> </div></a>
+	<a href="http://ds604.github.io/website/metallicMeans.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140130_00.png" width="30%" style="float:left"/> </div></a>
+	<a href="http://ds604.github.io/website/sketchyCircle.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140129_00.png" width="30%" style="float:left"/> </div></a>
+	  <a href="http://ds604.github.io/website/rotatingCircle.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140122_00.png" width="30%" style="float:left"/> </div></a>
+    <a href="http://ds604.github.io/website/waveSine01.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140120_00.png" width="30%" style="float:left"/></div></a>
+    <a href="http://integral.davidsarma.org/mountain/"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/20140102_00.png" width="30%" style="float:left"/></div></a>
+        <a href="http://ds604.github.io/website/integralDS.html"><div class="image"><img src="https://dl.dropboxusercontent.com/u/7632896/integralDS.jpg" width="30%" style="float:left"/>  </div></a>
+	
+	
+	<blockquote class="instagram-media" data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://instagram.com/p/yNSUX1nRW7/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_top">A photo posted by David Sarma (@davidsarma)</a> on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-01-23T19:06:55+00:00">Jan 23, 2015 at 11:06am PST</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+	</div>
+
+</div>
+                    
+        </div>
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+</body>
+</html>

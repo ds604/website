@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vast Challenge 2013: Paper 121</title>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+
+        
+        <style>
+                body {
+                        color: #B1B1B1;
+                        background-color: #000011;
+                        //font-family: Arial, sans-serif;
+                        font-size: 10pt;
+                }
+                div#main{
+                        width:400PX;
+                        text-align:left;
+                        border:0px solid silver;
+                        vertical-align:middle;
+                        margin: 0 auto;
+                        padding-top:12em;
+                        padding-bottom:10em;
+                }
+                div.image{
+                        text-align:center;
+                        padding-top: 1em;
+                        padding-bottom: 1em;
+                }
+                div.image > img{
+                        width:400px;
+                }
+                footer { 
+                        width: 175px; 
+                        height: 1.5em; 
+                        position: fixed; 
+                        bottom: 0;
+                        right: 0;
+                        padding: 3px 5px 5px 5px;
+                        text-align: left;
+                        z-index: 200;
+                }
+		p.heading1 {
+			font-size:12pt;
+			font-weight:bold;
+		}
+			p.indent {
+				margin-left: 1em;
+			}
+		div {
+			padding-bottom:1em;
+		}
+		ol > li{
+			padding-bottom:1em;
+		}
+h1 {
+text-decoration: underline;
+}
+        </style>
+
+        
+</head>
+<body>
+        <div id="main">
+                <div style="text-align:center;font-weight:bold;font-size:12pt;color:#FFFFFF;padding-bottom:1.4em">VAST Challenge 2013<br> Design Review</div>                
+                <div style="text-align:center;font-size:9pt;padding-bottom:4em">DAVID SARMA</div>
+     
+		<div>
+<h3>Paper  121 - CSU-Zhao-MC2<br>Reviewer 4 - David Sarma</h3>
+
+Overall rating:  18  (scale is 4..50; 50 is best)<br><br>
+<h3>Review Criteria 1: Creativity of the design (25%)</h3>
+
+  Improves upon a known concept, technique, display, or device from network security in a notable, non-incremental manner.
+   A genuine creative breakthrough.<br><br>
+
+Overall Creativity Score
+<p class="indent">
+   Excellent
+			</p>
+
+Comments on Creativity
+			<p class="indent">
+   Having multiple viewing strategies that characterize information in
+   different ways is a strong approach. The creativity of the entry comes
+   through in acknowledging that there is no one viewing strategy that
+   captures all the information, and that viewing the same information in
+   multiple ways will yield stronger results.
+			</p>
+
+			<br>
+<h3>Review Criteria 2: Scale of the design (25%)</h3>
+
+The size of the network is sufficiently large. As a guide, consider a network of 1 million nodes as Very Big and a network of 100 nodes as Very Small.
+   The events represented in the network - in terms of diversity or interaction - are sufficiently complex. As a guide, consider more than 5 events (of the same or different types) and/or 2 dimensions of interaction as Complex and fewer than 5 events (of the same or different types) and/or 1 dimension of interaction as Simple.
+
+Overall Scale Score
+<p class="indent">
+   Excellent
+			</p>
+	
+Comments on Scale
+<p class="indent">
+   The visual elements would appear to scale to the size of the networks
+   described in the challenge, as well as allowing drill-down to see the
+   network in more detail.
+			</p>
+
+<h3>Review Criteria 3: Effectiveness of the design (25%)</h3>
+
+   The design concept balances the size of network with complexity of represented events. Larger networks and more complex event scenarios should be judged less strictly than smaller networks with simpler complex event scenarios.
+   You are able to understand connections between events and their location within the computer network.<br><br>
+
+Overall Effectiveness Score
+<p class="indent">
+   Good
+</p>
+	
+Comments on Effectiveness
+<p class="indent">
+   Directly addressing the need for real-time monitoring and historical
+   analysis in a single framework is a strong approach. This would allow
+   effective analysis for a user analyzing a scenario. It's not as clear
+   that the design is as effective in providing an overview of overall
+   network health. This would likely need to be something that could be
+   constructed from the different viewing strategies. Additional comments
+   are below.
+</p>
+
+Overall Submission
+<p class="indent">
+   Good
+</p>
+
+Comments on Overall Submission
+<p class="indent">
+   Comments on guiding metaphor:<br>
+   The design philosophy of multiple viewing strategies seen together
+   offering insight into the overall picture is a strong one. Credit given
+   for addressing the issue of monitoring current state while also allowing
+   historical analysis. The design is clearly derived from real analysis
+   scenarios. Credit given for stepping through an actual analysis scenario,
+   and showing in a compelling manner the strength of the different parts of
+   the display.<br><br>
+
+
+   Issues:<br>
+   The platform as presented would appear to be appropriate for a single
+   user performing an analysis of a scenario. While the methods appear very
+   robust and scalable, an overview picture appropriate for a large display
+   might require some higher level indicators. The viewing strategies as
+   presented are possibly one drill-down level below where we might wish to
+   start an analysis. The question we might want to have answered is, What
+   does a normal or acceptable configuration look like? How does that
+   compare to the current state of things? This would answer the overview
+   question of, How are we doing? What's the current state of things?<br><br>
+
+
+   General Comments:<br>
+   The analysis scenario presented, and the format of having multiple
+   viewing strategies, is convincing. This appears to be a tested means of
+   carrying out an analysis. The parameter panes appear to be the least
+   developed part of the interface. Separating out elements which are global
+   to the network itself versus those which are local to the viewing
+   strategy might help to mature this area.<br><br>
+
+   While the design doesn't quite take the step of binding the different
+   viewing strategies into a statement of overall network health, the
+   methods presented suggest ways of constructing this step.<br><br>
+
+   Possible directions for improvement:<br>
+   It would be an interesting extension to have the flowchart (Figure 3)
+   incorporated into the actual design. Having multiple viewing strategies
+   that can be hooked up as viewers into an analysis dataset, and layed out
+   spatially in the workspace, would enable flexible working methods.
+   Historical analysis would allow an analyst to build workspaces that make
+   statements relevant to certain situations, or to perform different types
+   of processing. Saving these out as "statements" about the network, and
+   subsequently applying them to the real-time monitoring arrangement might
+   lead to a flexible means of deriving measures and "speaking" about
+   overall network health. This would then be what could be incorporated
+   into the large display that we aim for.<br><br>
+
+Comments to Committee Only: Award Consideration (hidden from author)<br><br>
+
+   This entry shows clear attention to the information an individual would
+   need to carry out an analysis, derived from the experience of carrying
+   out an analysis. Credit given for a design clearly motivated by the
+   problem under consideration.
+</p>
+		</div>	
+             
+               
+        </div>
+        <footer><img src="http://davidsarma.org/images/DavidSarmaDotOrg_h12.png"></footer>
+</body>
+</html>

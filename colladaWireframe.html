@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			body { color: white; background-color: black; padding: 5px; }
+			#container { width: 400px; height: 400px; border: 2px solid white; }
+		</style>
+	</head>
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+		<script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+		<script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/ColladaLoader.js"></script>
+		<script>
+
+			var camera, controls, scene, renderer, dae, container;
+			var dae_url = "https://rawgit.com/alan0xd7/a29c019ce3a9894a1285/raw/5ed3dd03cf385539d4fe3f3e411f6ad133b4c619/model01.dae";
+			
+			$(function(){
+				
+				var loader = new THREE.ColladaLoader();
+				loader.options.convertUpAxis = true;
+				loader.options.subdivideFaces = false;
+				
+				loader.load(dae_url, function(collada){
+					dae = collada.scene;
+					dae.scale.x = dae.scale.y = dae.scale.z = 25.4; // unit conversion
+					dae.updateMatrix();
+					init();
+				});
+			});
+			
+			function init(){
+				
+				container = $("#container");
+				
+				camera = new THREE.PerspectiveCamera(60, container.innerWidth()/container.innerHeight(), 1, 1000 );
+				camera.position.z = 50;
+				
+				controls = new THREE.OrbitControls(camera, container[0]);
+				controls.damping = 0.2;    
+				controls.addEventListener('change', render);
+				
+				scene = new THREE.Scene();   
+				scene.add(dae);
+				
+				var mesh = dae.children[0].children[0];      
+				var helper = new THREE.EdgesHelper(mesh, 0xffffff);
+				helper.material.linewidth = 2;
+				scene.add(helper);
+			
+				//scene.add(new THREE.AxisHelper(50));
+				
+				renderer = new THREE.WebGLRenderer({ antialias: true });
+				renderer.setPixelRatio(window.devicePixelRatio);
+				renderer.setSize(container.innerWidth(), container.innerHeight());
+				
+				container.append(renderer.domElement);
+				
+				animate();
+				render();
+			}
+			
+			function animate(){
+				window.requestAnimationFrame(animate);
+				controls.update();
+			}
+			
+			function render() {
+				renderer.render(scene, camera);
+			}
+
+		</script>
+		<div id="container"></div>
+	</body>
+</html>

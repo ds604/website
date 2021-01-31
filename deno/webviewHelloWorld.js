@@ -1,4 +1,4 @@
-//deno run --allow-env --allow-write --allow-read --allow-plugin --allow-net --unstable -A https://ds604.neocities.org/deno/webviewHelloWorld.js
+//deno run --allow-env --allow-write --allow-read --allow-plugin --allow-net --unstable -A https://raw.githubusercontent.com/ds604/website/master/deno/webviewHelloWorld.js
 
 // Importing the webview library
 import { WebView } from "https://deno.land/x/webview/mod.ts";

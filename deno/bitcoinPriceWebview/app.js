@@ -1,4 +1,4 @@
-import { WebView } from "https://deno.land/x/webview/mod.ts";
+import { Webview } from "https://deno.land/x/webview/mod.ts";
 import denjucks from "https://deno.land/x/denjucks/mod.js";
 // Fetching Bitcoin Price Index data from CoinDesk
 console.log("helloooooooooooo!!!!!!!")
@@ -20,7 +20,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     console.log(html)
     
     // Creating the webview with the rendered template
-    let webview = new WebView({
+    let webview = new Webview({
         title: "Deno Cryptocurrency Webview - Plot Price",
         url: html,
         width: 800,
@@ -50,7 +50,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     
     // Creating a webview with the error if something failed while running the
     // application
-    let webview = new WebView({
+    let webview = new Webview({
         title: "Deno Cryptocurrency Webview - Error Page",
         url: `data:text/html,${encodeURIComponent(html)}`,
         width: 500,

@@ -1,6 +1,7 @@
 import { WebView } from "https://deno.land/x/webview/mod.ts";
 import denjucks from "https://deno.land/x/denjucks/mod.js";
 // Fetching Bitcoin Price Index data from CoinDesk
+console.log("helloooooooooooo!!!!!!!")
 fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
 .then(resp => {
     console.log(resp.json())

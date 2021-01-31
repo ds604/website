@@ -1,5 +1,5 @@
-//deno run -Ar --unstable https://deno.land/x/webview/examples/local.ts
-import { WebView } from "https://deno.land/x/webview/mod.ts";
+//deno run -Ar --unstable https://raw.githubusercontent.com/ds604/website/master/deno/local.ts
+import { Webview } from "https://deno.land/x/webview/mod.ts";
 
 const html = `
   <html>

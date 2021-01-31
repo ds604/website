@@ -17,7 +17,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     
     // Creating the webview with the rendered template
     let webview = new WebView({
-        title: "Deno Cryptocurrency Webview",
+        title: "Deno Cryptocurrency Webview - Plot Price",
         url: html,
         width: 800,
         height: 600,

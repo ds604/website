@@ -1,6 +1,7 @@
 import { renderFile, configure } from "https://deno.land/x/eta@v1.11.0/mod.ts"
 
-const viewPath = `${Deno.cwd()}/views/`
+// const viewPath = `${Deno.cwd()}/views/`
+const viewPath = `./views/`
 
 // Set Eta's configuration
 configure({

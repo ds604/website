@@ -43,6 +43,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
         </html>
         `
     ;
+    console.log(html)
     
     // Creating a webview with the error if something failed while running the
     // application

@@ -48,7 +48,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     // Creating a webview with the error if something failed while running the
     // application
     let webview = new WebView({
-        title: "Deno Cryptocurrency Webview",
+        title: "Deno Cryptocurrency Webview - Error Page",
         url: html,
         width: 500,
         height: 400,

@@ -1,0 +1,3 @@
+My favorite food is <%= it.food %>
+
+<%~ includeFile('./footer') %>

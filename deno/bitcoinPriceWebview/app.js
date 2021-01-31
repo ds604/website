@@ -13,6 +13,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     });
     
     let html = "data:text/html," + renderedTemplate;
+    console.log(html)
     
     // Creating the webview with the rendered template
     let webview = new WebView({

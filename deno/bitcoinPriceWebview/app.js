@@ -12,7 +12,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
         bpiData: JSON.stringify(bpiData.bpi),
     });
     
-    let html = "data:text/html," + renderedTemplate;
+    let html = "data:text/html," + encodeURIComponent(renderedTemplate);
     console.log(html)
     
     // Creating the webview with the rendered template
@@ -33,7 +33,6 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     
     // Creating some HTML markup to display the error message
     let html = `
-        data:text/html,
         <html>
             <head></head>
             <body>
@@ -49,7 +48,7 @@ fetch("https://api.coindesk.com/v1/bpi/historical/close.json")
     // application
     let webview = new WebView({
         title: "Deno Cryptocurrency Webview - Error Page",
-        url: html,
+        url: `data:text/html,${encodeURIComponent(html)}`,
         width: 500,
         height: 400,
         resizable: true,

@@ -14,7 +14,7 @@ import { renderFile, configure } from "https://deno.land/x/eta@v1.11.0/mod.ts"
 // You could also write renderFile("template.eta"),
 // renderFile("/template"), etc.
 
-let templateResult = await renderFile("./views/template.eta", { food: "cake" })
+let templateResult = await renderFile("template.eta", { food: "cake" })
 
 console.log(templateResult)
 /*

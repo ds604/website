@@ -2,6 +2,8 @@
 
 // Importing the webview library
 import { WebView } from "https://deno.land/x/webview/mod.ts";
+
+console.log('hello world!!!')
 // Creating an HTML page
 let html = `
     <html>

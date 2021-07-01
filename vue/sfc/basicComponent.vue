@@ -17,7 +17,7 @@
 </template>
 
 <script>
-export default {
+module.exports = {
   data() {
     return {
       message: 'Welcome to Vue!'

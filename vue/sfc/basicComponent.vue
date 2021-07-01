@@ -20,7 +20,7 @@
 module.exports = {
   data() {
     return {
-      message: 'Welcome to Vue!'
+      message: 'Welcome to Vue! foobar'
     };
   },
   methods: {
